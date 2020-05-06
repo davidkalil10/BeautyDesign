@@ -1,3 +1,4 @@
+import 'package:beautydesign/Navegar.dart';
 import 'package:beautydesign/telas/TelaPrincipal.dart';
 import 'package:flutter/material.dart';
 
@@ -13,11 +14,11 @@ class _HomeState extends State<Home> {
 
   _checarSenha(){
 
-    if (_emailController.text == "paula@beautydesign.com" && _senhaController.text == "Davidbonitao19"){
+    if (_emailController.text == "" && _senhaController.text == ""){
 
       Navigator.pushReplacement(
           context,
-          MaterialPageRoute(builder: (context)=> TelaPrincipal()));
+          MaterialPageRoute(builder: (context)=> Navegar()));
 
     }else{
 
@@ -34,6 +35,9 @@ class _HomeState extends State<Home> {
     }
 
   }
+
+  //Variáveis iniciais
+  Color rosaPaula = Color(0xffFA879E);
 
 
   @override
@@ -56,14 +60,14 @@ class _HomeState extends State<Home> {
                       autofocus: false,
                       decoration: InputDecoration(
                         labelText: "E-mail",
-                        labelStyle: TextStyle(fontSize: 20.0, color: Colors.pink[100]),
+                        labelStyle: TextStyle(fontSize: 20.0, color: rosaPaula),
                         hintText: "Digite seu e-mail..",
                         focusedBorder: UnderlineInputBorder( //mudar cor da linha
-                            borderSide: BorderSide(color: Colors.pink[100])
+                            borderSide: BorderSide(color: rosaPaula)
                         ),
                         icon: Icon(
                           Icons.email,
-                          color: Colors.pink[100],
+                          color: rosaPaula,
                         ),
                       ),
                     ),
@@ -77,14 +81,14 @@ class _HomeState extends State<Home> {
                       obscureText: true,
                       decoration: InputDecoration(
                         labelText: "Senha",
-                        labelStyle: TextStyle(fontSize: 20.0, color: Colors.pink[100]),
+                        labelStyle: TextStyle(fontSize: 20.0, color: rosaPaula),
                         hintText: "Digite sua senha..",
                         focusedBorder: UnderlineInputBorder( //mudar cor da linha
-                            borderSide: BorderSide(color: Colors.pink[100])
+                            borderSide: BorderSide(color: rosaPaula)
                         ),
                         icon: Icon(
                           Icons.vpn_key,
-                          color: Colors.pink[100],
+                          color: rosaPaula,
                         ),
                       ),
                     ),
@@ -100,23 +104,9 @@ class _HomeState extends State<Home> {
                               fontWeight: FontWeight.bold
                           ),
                         ),
-                        color: Colors.pink[100],
+                        color: rosaPaula,
                         padding: EdgeInsets.fromLTRB(30, 15, 30, 15), //padding para aumentar tamanho do botao
-                        onPressed: (){
-
-                          if (_emailController.text == "paula@beautydesign.com" && _senhaController.text == "Davidbonitao19"){
-
-                            Navigator.pushReplacement(
-                                context,
-                                MaterialPageRoute(builder: (context)=> TelaPrincipal()));
-
-                          }else{
-
-
-                          }
-
-
-                        }
+                        onPressed: ()=> _checarSenha()
                     ),
                   ),
                   FlatButton(
