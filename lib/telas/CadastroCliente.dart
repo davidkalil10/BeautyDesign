@@ -1,11 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
+import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
+import 'package:lite_rolling_switch/lite_rolling_switch.dart';
 
 class CadastroCliente extends StatefulWidget {
   @override
   _CadastroClienteState createState() => _CadastroClienteState();
 }
+
+//OPÇÕES DE ATENDIMENTOS
+
+class Atendimentos {
+  final int _key;
+  final String _value;
+  Atendimentos(this._key, this._value);
+}
+
 
 class _CadastroClienteState extends State<CadastroCliente> {
 
@@ -26,7 +37,7 @@ class _CadastroClienteState extends State<CadastroCliente> {
   var mascaraNascimento = new MaskTextInputFormatter(mask: '##/##/####');
 
   //Controles icones
-  bool _infoContato = true;
+  bool _infoContato = false;
   bool _infoTratamento = true;
   bool _infoAvaliacao = true;
   bool _infoAutorizacao = true;
@@ -34,6 +45,19 @@ class _CadastroClienteState extends State<CadastroCliente> {
   //Variáveis iniciais
   Color rosaPaula = Color(0xffFA879E);
   FocusNode myFocusNode;
+  int _opcaoAtendimento = 1;
+  String _dataAgendamento = " Selecione a data";
+
+
+
+
+  final _buttonOptions = [
+    Atendimentos(1,"Bonny Browns"),
+    Atendimentos(2,"Natural Lips"),
+    Atendimentos(3,"DD Glow"),
+    Atendimentos(4,"Black Lashes"),
+  ];
+
 
   @override
   void initState() {
@@ -52,10 +76,11 @@ class _CadastroClienteState extends State<CadastroCliente> {
 
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
         backgroundColor: Colors.white,
         body: Container(
-          padding: EdgeInsets.all(16),
+          padding: EdgeInsets.all(5),
           child: Center(
             child: SingleChildScrollView(
               child: Column(
@@ -291,7 +316,121 @@ class _CadastroClienteState extends State<CadastroCliente> {
                         },
                         label: Text("Tratamentos a serem feitos",style: TextStyle(fontSize: 25.0, fontWeight: FontWeight.bold, color: rosaPaula),),
                         icon: _infoTratamento? Icon(FontAwesomeIcons.chevronDown,color: rosaPaula,) : Icon(FontAwesomeIcons.chevronRight,color: rosaPaula,),
+                      ),
+                      _infoTratamento
+                          ? Column(
+                            children: <Widget>[
+                              Padding(
+                                padding: EdgeInsets.only(left: 30,right: 30),
+                                child:SizedBox(
+                                 // height: MediaQuery.of(context).size.width/4,
+                                  height: _buttonOptions.length * 30.0,
+                                  //width: MediaQuery.of(context).size.width,
+                                  child: ListView(
+                                    padding: EdgeInsets.all(0.0),
+                                    children: _buttonOptions.map((timeValue) => RadioListTile(
+                                      groupValue: _opcaoAtendimento,
+                                      title: Text(timeValue._value),
+                                      value: timeValue._key,
+                                      onChanged: (val) {
+                                        setState(() {
+                                          debugPrint('VAL = $val');
+                                          _opcaoAtendimento = val;
+                                        });
+                                      },
+                                    )).toList(),
+                                  ),
+                                ) ,
+                              ),
+                              //DATA PICKER
+                              Padding(
+                                  padding: EdgeInsets.only(right: 30,left: 30),
+                                child: RaisedButton(
+                                  shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(5.0)),
+                                  elevation: 4.0,
+                                  onPressed: () {
+
+                                    DatePicker.showDatePicker(context,
+                                      theme: DatePickerTheme(
+                                        containerHeight: 210.0,
+                                      ),
+                                      showTitleActions: true,
+                                      locale: LocaleType.pt,
+                                      minTime: DateTime(2019, 1, 1),
+                                      maxTime: DateTime(2022, 12, 31), onConfirm: (date) {
+                                        print('confirm $date');
+                                        setState(() {
+                                          _dataAgendamento = ' ${date.day} - ${date.month} - ${date.year}';
+                                        });
+                                      },
+                                      // currentTime: DateTime.now(), locale: LocaleType.en
+                                    );
+
+                                  },
+                                  child: Container(
+                                    alignment: Alignment.center,
+                                    height: 50.0,
+                                    child: Row(
+                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                      children: <Widget>[
+                                        Row(
+                                          children: <Widget>[
+                                            Container(
+                                              child: Row(
+                                                children: <Widget>[
+                                                  Icon(
+                                                    Icons.date_range,
+                                                    size: 18.0,
+                                                    color: rosaPaula,
+                                                  ),
+                                                  Text(
+                                                    _dataAgendamento,
+                                                    style: TextStyle(
+                                                        color: rosaPaula,
+                                                        fontWeight: FontWeight.bold,
+                                                        fontSize: 20.0),
+                                                  ),
+                                                ],
+                                              ),
+                                            )
+                                          ],
+                                        ),
+                                        Text(
+                                          "  ALTERAR",
+                                          style: TextStyle(
+                                              color: Colors.grey,
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: 18.0),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  color: Colors.white,
+                                ),
+                              ),
+                              //Botao adicionar
+                              /*Padding(
+                                padding: EdgeInsets.only(top:10, right: 30,left: 30),
+                                child: RaisedButton(
+                                  shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(5.0)),
+                                  elevation: 4.0,
+                                  onPressed: () {
+                                  },
+                                  child: Container(
+                                    alignment: Alignment.center,
+                                    height: 50.0,
+                                    child: Text("Adicionar",style: TextStyle(fontSize: 25,color: Colors.white,fontWeight: FontWeight.bold),
+                                    ),
+                                  ),
+                                  color: rosaPaula,
+                                ),
+                              )*/
+
+                            ],
                       )
+                          : Container()
                     ],
                   ),
                   //AVALIAÇÃO
@@ -307,7 +446,37 @@ class _CadastroClienteState extends State<CadastroCliente> {
                         },
                         label: Text("Avaliação",style: TextStyle(fontSize: 25.0, fontWeight: FontWeight.bold, color: rosaPaula),),
                         icon: _infoAvaliacao? Icon(FontAwesomeIcons.chevronDown,color: rosaPaula,) : Icon(FontAwesomeIcons.chevronRight,color: rosaPaula,),
+                      ),
+                      _infoAvaliacao
+                      ? Column(
+                        children: <Widget>[
+                          Padding(
+                              padding: EdgeInsets.only(right: 30,left: 30),
+                            child:  Row(
+                              children: <Widget>[
+                                Text("Primeira pergunta: "),
+                                LiteRollingSwitch(
+                                  //initial value
+                                  value: false,
+                                  textOn: 'Sim',
+                                  textOff: 'Não',
+                                  colorOn: rosaPaula,
+                                  colorOff: Colors.greenAccent[700],
+                                  iconOn: FontAwesomeIcons.exclamationCircle,
+                                  iconOff: FontAwesomeIcons.checkCircle,
+                                  textSize: 16.0,
+                                  onChanged: (bool state) {
+                                    //Use it to manage the different states
+                                    print('Current State of SWITCH IS: $state');
+                                  },
+                                ),
+                                Text("Descreva")
+                              ],
+                            )
+                          )
+                        ],
                       )
+                      : Container()
                     ],
                   ),
                   Column(
@@ -328,6 +497,9 @@ class _CadastroClienteState extends State<CadastroCliente> {
                   Padding(
                     padding: EdgeInsets.only(top: 20,left: 20, right: 20),
                     child: RaisedButton(
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(5.0)),
+                        elevation: 4.0,
                         child: Text(
                           "Finalizar",
                           style: TextStyle(
