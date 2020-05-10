@@ -1,3 +1,4 @@
+import 'package:beautydesign/customWidgets/SwitchlikeCheckbox.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
@@ -47,8 +48,13 @@ class _CadastroClienteState extends State<CadastroCliente> {
   FocusNode myFocusNode;
   int _opcaoAtendimento = 1;
   String _dataAgendamento = " Selecione a data";
+  bool enableCoolStuff = false;
 
-
+  void _toggle() {
+    setState(() {
+      enableCoolStuff = !enableCoolStuff;
+    });
+  }
 
 
   final _buttonOptions = [
@@ -452,27 +458,96 @@ class _CadastroClienteState extends State<CadastroCliente> {
                         children: <Widget>[
                           Padding(
                               padding: EdgeInsets.only(right: 30,left: 30),
-                            child:  Row(
-                              children: <Widget>[
-                                Text("Primeira pergunta: "),
-                                LiteRollingSwitch(
-                                  //initial value
-                                  value: false,
-                                  textOn: 'Sim',
-                                  textOff: 'Não',
-                                  colorOn: rosaPaula,
-                                  colorOff: Colors.greenAccent[700],
-                                  iconOn: FontAwesomeIcons.exclamationCircle,
-                                  iconOff: FontAwesomeIcons.checkCircle,
-                                  textSize: 16.0,
-                                  onChanged: (bool state) {
-                                    //Use it to manage the different states
-                                    print('Current State of SWITCH IS: $state');
-                                  },
+                            child:
+                            //Primeira Pergunta
+                            Column(
+                          children: <Widget>[
+                          Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: <Widget>[
+                              Text("• Esta em tratamento médico?",
+                                style: TextStyle(
+                                    fontSize: 20
+                                ),),
+                              GestureDetector(
+                                onTap: _toggle,
+                                behavior: HitTestBehavior.translucent,
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: <Widget>[
+                                    SwitchlikeCheckbox(checked: enableCoolStuff),
+                                  ],
                                 ),
-                                Text("Descreva")
-                              ],
-                            )
+                              ),
+                            ],
+                          ),
+                          enableCoolStuff
+                              ? TextField(
+                            keyboardType: TextInputType.text,
+                            controller: _nomeController ,
+                            style: TextStyle(fontSize: 20.0, color: Colors.black),
+                            autofocus: false,
+                            onEditingComplete: ()=> FocusScope.of(context).requestFocus(myFocusNode),
+                            decoration: InputDecoration(
+                              labelText: "Especifique: ",
+                              labelStyle: TextStyle(fontSize: 20.0, color: rosaPaula),
+                              hintText: "Especifique..",
+                              focusedBorder: UnderlineInputBorder( //mudar cor da linha
+                                  borderSide: BorderSide(color: rosaPaula)
+                              ),
+                              //icon: Icon(FontAwesomeIcons.user,color: rosaPaula),
+                            ),
+                          )
+                              : Container()
+                        ],
+                      )
+                          ),
+                          //Segunda Pergunta
+                          Padding(
+                              padding: EdgeInsets.only(top:10, right: 30,left: 30),
+                              child:
+                              //Primeira Pergunta
+                              Column(
+                                children: <Widget>[
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    children: <Widget>[
+                                      Text("• Tem alergia?",
+                                        style: TextStyle(
+                                            fontSize: 20
+                                        ),),
+                                      GestureDetector(
+                                        onTap: _toggle,
+                                        behavior: HitTestBehavior.translucent,
+                                        child: Row(
+                                          mainAxisAlignment: MainAxisAlignment.center,
+                                          children: <Widget>[
+                                            SwitchlikeCheckbox(checked: enableCoolStuff),
+                                          ],
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  enableCoolStuff
+                                      ? TextField(
+                                    keyboardType: TextInputType.text,
+                                    controller: _nomeController ,
+                                    style: TextStyle(fontSize: 20.0, color: Colors.black),
+                                    autofocus: false,
+                                    onEditingComplete: ()=> FocusScope.of(context).requestFocus(myFocusNode),
+                                    decoration: InputDecoration(
+                                      labelText: "Especifique: ",
+                                      labelStyle: TextStyle(fontSize: 20.0, color: rosaPaula),
+                                      hintText: "Especifique..",
+                                      focusedBorder: UnderlineInputBorder( //mudar cor da linha
+                                          borderSide: BorderSide(color: rosaPaula)
+                                      ),
+                                      //icon: Icon(FontAwesomeIcons.user,color: rosaPaula),
+                                    ),
+                                  )
+                                      : Container()
+                                ],
+                              )
                           )
                         ],
                       )
