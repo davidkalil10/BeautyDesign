@@ -48,13 +48,22 @@ class _CadastroClienteState extends State<CadastroCliente> {
   FocusNode myFocusNode;
   int _opcaoAtendimento = 1;
   String _dataAgendamento = " Selecione a data";
-  bool enableCoolStuff = false;
 
-  void _toggle() {
-    setState(() {
-      enableCoolStuff = !enableCoolStuff;
-    });
-  }
+
+  //Controles icones
+  bool resultadoPergunta1 = false;
+  bool resultadoPergunta2 = false;
+  bool resultadoPergunta3 = false;
+  bool resultadoPergunta4 = false;
+  bool resultadoPergunta5 = false;
+  bool resultadoPergunta6 = false;
+  bool resultadoPergunta7 = false;
+  bool resultadoPergunta8 = false;
+  bool resultadoPergunta9 = false;
+  bool resultadoPergunta10 = false;
+  bool resultadoPergunta11 = false;
+  bool resultadoPergunta12 = false;
+
 
 
   final _buttonOptions = [
@@ -456,11 +465,10 @@ class _CadastroClienteState extends State<CadastroCliente> {
                       _infoAvaliacao
                       ? Column(
                         children: <Widget>[
+                          //Primeira Pergunta
                           Padding(
                               padding: EdgeInsets.only(right: 30,left: 30),
-                            child:
-                            //Primeira Pergunta
-                            Column(
+                            child: Column(
                           children: <Widget>[
                           Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -470,18 +478,22 @@ class _CadastroClienteState extends State<CadastroCliente> {
                                     fontSize: 20
                                 ),),
                               GestureDetector(
-                                onTap: _toggle,
+                                onTap: (){
+                                  setState(() {
+                                    resultadoPergunta1 = !resultadoPergunta1;
+                                  });
+                                },
                                 behavior: HitTestBehavior.translucent,
                                 child: Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: <Widget>[
-                                    SwitchlikeCheckbox(checked: enableCoolStuff),
+                                    SwitchlikeCheckbox(checked: resultadoPergunta1),
                                   ],
                                 ),
                               ),
                             ],
                           ),
-                          enableCoolStuff
+                            resultadoPergunta1
                               ? TextField(
                             keyboardType: TextInputType.text,
                             controller: _nomeController ,
@@ -505,9 +517,7 @@ class _CadastroClienteState extends State<CadastroCliente> {
                           //Segunda Pergunta
                           Padding(
                               padding: EdgeInsets.only(top:10, right: 30,left: 30),
-                              child:
-                              //Primeira Pergunta
-                              Column(
+                              child: Column(
                                 children: <Widget>[
                                   Row(
                                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -517,18 +527,514 @@ class _CadastroClienteState extends State<CadastroCliente> {
                                             fontSize: 20
                                         ),),
                                       GestureDetector(
-                                        onTap: _toggle,
+                                        onTap: (){
+                                          setState(() {
+                                            resultadoPergunta2 = !resultadoPergunta2;
+                                          });
+                                        },
                                         behavior: HitTestBehavior.translucent,
                                         child: Row(
                                           mainAxisAlignment: MainAxisAlignment.center,
                                           children: <Widget>[
-                                            SwitchlikeCheckbox(checked: enableCoolStuff),
+                                            SwitchlikeCheckbox(checked: resultadoPergunta2),
                                           ],
                                         ),
                                       ),
                                     ],
                                   ),
-                                  enableCoolStuff
+                                  resultadoPergunta2
+                                      ? TextField(
+                                    keyboardType: TextInputType.text,
+                                    controller: _nomeController ,
+                                    style: TextStyle(fontSize: 20.0, color: Colors.black),
+                                    autofocus: false,
+                                    onEditingComplete: ()=> FocusScope.of(context).requestFocus(myFocusNode),
+                                    decoration: InputDecoration(
+                                      labelText: "Especifique: ",
+                                      labelStyle: TextStyle(fontSize: 20.0, color: rosaPaula),
+                                      hintText: "Especifique..",
+                                      focusedBorder: UnderlineInputBorder( //mudar cor da linha
+                                          borderSide: BorderSide(color: rosaPaula)
+                                      ),
+                                      //icon: Icon(FontAwesomeIcons.user,color: rosaPaula),
+                                    ),
+                                  )
+                                      : Container()
+                                ],
+                              )
+                          ),
+                          //Terceira Pergunta
+                          Padding(
+                              padding: EdgeInsets.only(top:10, right: 30,left: 30),
+                              child: Column(
+                                children: <Widget>[
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    children: <Widget>[
+                                      Text("• Fez cirurgia recentemente?",
+                                        style: TextStyle(
+                                            fontSize: 20
+                                        ),),
+                                      GestureDetector(
+                                        onTap: (){
+                                          setState(() {
+                                            resultadoPergunta3 = !resultadoPergunta3;
+                                          });
+                                        },
+                                        behavior: HitTestBehavior.translucent,
+                                        child: Row(
+                                          mainAxisAlignment: MainAxisAlignment.center,
+                                          children: <Widget>[
+                                            SwitchlikeCheckbox(checked: resultadoPergunta3),
+                                          ],
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  resultadoPergunta3
+                                      ? TextField(
+                                    keyboardType: TextInputType.text,
+                                    controller: _nomeController ,
+                                    style: TextStyle(fontSize: 20.0, color: Colors.black),
+                                    autofocus: false,
+                                    onEditingComplete: ()=> FocusScope.of(context).requestFocus(myFocusNode),
+                                    decoration: InputDecoration(
+                                      labelText: "Especifique: ",
+                                      labelStyle: TextStyle(fontSize: 20.0, color: rosaPaula),
+                                      hintText: "Especifique..",
+                                      focusedBorder: UnderlineInputBorder( //mudar cor da linha
+                                          borderSide: BorderSide(color: rosaPaula)
+                                      ),
+                                      //icon: Icon(FontAwesomeIcons.user,color: rosaPaula),
+                                    ),
+                                  )
+                                      : Container()
+                                ],
+                              )
+                          ),
+                          //Quarta pergunta
+                          Padding(
+                              padding: EdgeInsets.only(top:10, right: 30,left: 30),
+                              child: Column(
+                                children: <Widget>[
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    children: <Widget>[
+                                      Text("• Tem cicatriz facil?",
+                                        style: TextStyle(
+                                            fontSize: 20
+                                        ),),
+                                      GestureDetector(
+                                        onTap: (){
+                                          setState(() {
+                                            resultadoPergunta4 = !resultadoPergunta4;
+                                          });
+                                        },
+                                        behavior: HitTestBehavior.translucent,
+                                        child: Row(
+                                          mainAxisAlignment: MainAxisAlignment.center,
+                                          children: <Widget>[
+                                            SwitchlikeCheckbox(checked: resultadoPergunta4),
+                                          ],
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  resultadoPergunta4
+                                      ? TextField(
+                                    keyboardType: TextInputType.text,
+                                    controller: _nomeController ,
+                                    style: TextStyle(fontSize: 20.0, color: Colors.black),
+                                    autofocus: false,
+                                    onEditingComplete: ()=> FocusScope.of(context).requestFocus(myFocusNode),
+                                    decoration: InputDecoration(
+                                      labelText: "Especifique: ",
+                                      labelStyle: TextStyle(fontSize: 20.0, color: rosaPaula),
+                                      hintText: "Especifique..",
+                                      focusedBorder: UnderlineInputBorder( //mudar cor da linha
+                                          borderSide: BorderSide(color: rosaPaula)
+                                      ),
+                                      //icon: Icon(FontAwesomeIcons.user,color: rosaPaula),
+                                    ),
+                                  )
+                                      : Container()
+                                ],
+                              )
+                          ),
+                          //Quinta Pergunta
+                          Padding(
+                              padding: EdgeInsets.only(top:10, right: 30,left: 30),
+                              child: Column(
+                                children: <Widget>[
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    children: <Widget>[
+                                      Text("• Há marcas de expressão facial?",
+                                        style: TextStyle(
+                                            fontSize: 20
+                                        ),),
+                                      GestureDetector(
+                                        onTap: (){
+                                          setState(() {
+                                            resultadoPergunta5 = !resultadoPergunta5;
+                                          });
+                                        },
+                                        behavior: HitTestBehavior.translucent,
+                                        child: Row(
+                                          mainAxisAlignment: MainAxisAlignment.center,
+                                          children: <Widget>[
+                                            SwitchlikeCheckbox(checked: resultadoPergunta5),
+                                          ],
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  resultadoPergunta5
+                                      ? TextField(
+                                    keyboardType: TextInputType.text,
+                                    controller: _nomeController ,
+                                    style: TextStyle(fontSize: 20.0, color: Colors.black),
+                                    autofocus: false,
+                                    onEditingComplete: ()=> FocusScope.of(context).requestFocus(myFocusNode),
+                                    decoration: InputDecoration(
+                                      labelText: "Especifique: ",
+                                      labelStyle: TextStyle(fontSize: 20.0, color: rosaPaula),
+                                      hintText: "Especifique..",
+                                      focusedBorder: UnderlineInputBorder( //mudar cor da linha
+                                          borderSide: BorderSide(color: rosaPaula)
+                                      ),
+                                      //icon: Icon(FontAwesomeIcons.user,color: rosaPaula),
+                                    ),
+                                  )
+                                      : Container()
+                                ],
+                              )
+                          ),
+                          //Sexta Pergunta
+                          Padding(
+                              padding: EdgeInsets.only(top:10, right: 30,left: 30),
+                              child: Column(
+                                children: <Widget>[
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    children: <Widget>[
+                                      Text("• Tem diabetes?",
+                                        style: TextStyle(
+                                            fontSize: 20
+                                        ),),
+                                      GestureDetector(
+                                        onTap: (){
+                                          setState(() {
+                                            resultadoPergunta6 = !resultadoPergunta6;
+                                          });
+                                        },
+                                        behavior: HitTestBehavior.translucent,
+                                        child: Row(
+                                          mainAxisAlignment: MainAxisAlignment.center,
+                                          children: <Widget>[
+                                            SwitchlikeCheckbox(checked: resultadoPergunta6),
+                                          ],
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  resultadoPergunta6
+                                      ? TextField(
+                                    keyboardType: TextInputType.text,
+                                    controller: _nomeController ,
+                                    style: TextStyle(fontSize: 20.0, color: Colors.black),
+                                    autofocus: false,
+                                    onEditingComplete: ()=> FocusScope.of(context).requestFocus(myFocusNode),
+                                    decoration: InputDecoration(
+                                      labelText: "Especifique: ",
+                                      labelStyle: TextStyle(fontSize: 20.0, color: rosaPaula),
+                                      hintText: "Especifique..",
+                                      focusedBorder: UnderlineInputBorder( //mudar cor da linha
+                                          borderSide: BorderSide(color: rosaPaula)
+                                      ),
+                                      //icon: Icon(FontAwesomeIcons.user,color: rosaPaula),
+                                    ),
+                                  )
+                                      : Container()
+                                ],
+                              )
+                          ),
+                          //Setima Pergunta
+                          Padding(
+                              padding: EdgeInsets.only(top:10, right: 30,left: 30),
+                              child: Column(
+                                children: <Widget>[
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    children: <Widget>[
+                                      Text("• Tem quelóide?",
+                                        style: TextStyle(
+                                            fontSize: 20
+                                        ),),
+                                      GestureDetector(
+                                        onTap: (){
+                                          setState(() {
+                                            resultadoPergunta7 = !resultadoPergunta7;
+                                          });
+                                        },
+                                        behavior: HitTestBehavior.translucent,
+                                        child: Row(
+                                          mainAxisAlignment: MainAxisAlignment.center,
+                                          children: <Widget>[
+                                            SwitchlikeCheckbox(checked: resultadoPergunta7),
+                                          ],
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  resultadoPergunta7
+                                      ? TextField(
+                                    keyboardType: TextInputType.text,
+                                    controller: _nomeController ,
+                                    style: TextStyle(fontSize: 20.0, color: Colors.black),
+                                    autofocus: false,
+                                    onEditingComplete: ()=> FocusScope.of(context).requestFocus(myFocusNode),
+                                    decoration: InputDecoration(
+                                      labelText: "Especifique: ",
+                                      labelStyle: TextStyle(fontSize: 20.0, color: rosaPaula),
+                                      hintText: "Especifique..",
+                                      focusedBorder: UnderlineInputBorder( //mudar cor da linha
+                                          borderSide: BorderSide(color: rosaPaula)
+                                      ),
+                                      //icon: Icon(FontAwesomeIcons.user,color: rosaPaula),
+                                    ),
+                                  )
+                                      : Container()
+                                ],
+                              )
+                          ),
+                          //Oitava Pergunta
+                          Padding(
+                              padding: EdgeInsets.only(top:10, right: 30,left: 30),
+                              child: Column(
+                                children: <Widget>[
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    children: <Widget>[
+                                      Text("• É gestante?",
+                                        style: TextStyle(
+                                            fontSize: 20
+                                        ),),
+                                      GestureDetector(
+                                        onTap: (){
+                                          setState(() {
+                                            resultadoPergunta8 = !resultadoPergunta8;
+                                          });
+                                        },
+                                        behavior: HitTestBehavior.translucent,
+                                        child: Row(
+                                          mainAxisAlignment: MainAxisAlignment.center,
+                                          children: <Widget>[
+                                            SwitchlikeCheckbox(checked: resultadoPergunta8),
+                                          ],
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  resultadoPergunta8
+                                      ? TextField(
+                                    keyboardType: TextInputType.text,
+                                    controller: _nomeController ,
+                                    style: TextStyle(fontSize: 20.0, color: Colors.black),
+                                    autofocus: false,
+                                    onEditingComplete: ()=> FocusScope.of(context).requestFocus(myFocusNode),
+                                    decoration: InputDecoration(
+                                      labelText: "Especifique: ",
+                                      labelStyle: TextStyle(fontSize: 20.0, color: rosaPaula),
+                                      hintText: "Especifique..",
+                                      focusedBorder: UnderlineInputBorder( //mudar cor da linha
+                                          borderSide: BorderSide(color: rosaPaula)
+                                      ),
+                                      //icon: Icon(FontAwesomeIcons.user,color: rosaPaula),
+                                    ),
+                                  )
+                                      : Container()
+                                ],
+                              )
+                          ),
+                          //Nona Pergunta
+                          Padding(
+                              padding: EdgeInsets.only(top:10, right: 30,left: 30),
+                              child: Column(
+                                children: <Widget>[
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    children: <Widget>[
+                                      Text("• Está em tratamento de HIV?",
+                                        style: TextStyle(
+                                            fontSize: 20
+                                        ),),
+                                      GestureDetector(
+                                        onTap: (){
+                                          setState(() {
+                                            resultadoPergunta9 = !resultadoPergunta9;
+                                          });
+                                        },
+                                        behavior: HitTestBehavior.translucent,
+                                        child: Row(
+                                          mainAxisAlignment: MainAxisAlignment.center,
+                                          children: <Widget>[
+                                            SwitchlikeCheckbox(checked: resultadoPergunta9),
+                                          ],
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  resultadoPergunta9
+                                      ? TextField(
+                                    keyboardType: TextInputType.text,
+                                    controller: _nomeController ,
+                                    style: TextStyle(fontSize: 20.0, color: Colors.black),
+                                    autofocus: false,
+                                    onEditingComplete: ()=> FocusScope.of(context).requestFocus(myFocusNode),
+                                    decoration: InputDecoration(
+                                      labelText: "Especifique: ",
+                                      labelStyle: TextStyle(fontSize: 20.0, color: rosaPaula),
+                                      hintText: "Especifique..",
+                                      focusedBorder: UnderlineInputBorder( //mudar cor da linha
+                                          borderSide: BorderSide(color: rosaPaula)
+                                      ),
+                                      //icon: Icon(FontAwesomeIcons.user,color: rosaPaula),
+                                    ),
+                                  )
+                                      : Container()
+                                ],
+                              )
+                          ),
+                          //Decima pergunta
+                          Padding(
+                              padding: EdgeInsets.only(top:10, right: 30,left: 30),
+                              child: Column(
+                                children: <Widget>[
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    children: <Widget>[
+                                      Text("• Tem hipo/hipertensão arterial?",
+                                        style: TextStyle(
+                                            fontSize: 20
+                                        ),),
+                                      GestureDetector(
+                                        onTap: (){
+                                          setState(() {
+                                            resultadoPergunta10 = !resultadoPergunta10;
+                                          });
+                                        },
+                                        behavior: HitTestBehavior.translucent,
+                                        child: Row(
+                                          mainAxisAlignment: MainAxisAlignment.center,
+                                          children: <Widget>[
+                                            SwitchlikeCheckbox(checked: resultadoPergunta10),
+                                          ],
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  resultadoPergunta10
+                                      ? TextField(
+                                    keyboardType: TextInputType.text,
+                                    controller: _nomeController ,
+                                    style: TextStyle(fontSize: 20.0, color: Colors.black),
+                                    autofocus: false,
+                                    onEditingComplete: ()=> FocusScope.of(context).requestFocus(myFocusNode),
+                                    decoration: InputDecoration(
+                                      labelText: "Especifique: ",
+                                      labelStyle: TextStyle(fontSize: 20.0, color: rosaPaula),
+                                      hintText: "Especifique..",
+                                      focusedBorder: UnderlineInputBorder( //mudar cor da linha
+                                          borderSide: BorderSide(color: rosaPaula)
+                                      ),
+                                      //icon: Icon(FontAwesomeIcons.user,color: rosaPaula),
+                                    ),
+                                  )
+                                      : Container()
+                                ],
+                              )
+                          ),
+                          //Decima primeira Pergunta
+                          Padding(
+                              padding: EdgeInsets.only(top:10, right: 30,left: 30),
+                              child: Column(
+                                children: <Widget>[
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    children: <Widget>[
+                                      Text("• Está utilizando ácidos?",
+                                        style: TextStyle(
+                                            fontSize: 20
+                                        ),),
+                                      GestureDetector(
+                                        onTap: (){
+                                          setState(() {
+                                            resultadoPergunta11 = !resultadoPergunta11;
+                                          });
+                                        },
+                                        behavior: HitTestBehavior.translucent,
+                                        child: Row(
+                                          mainAxisAlignment: MainAxisAlignment.center,
+                                          children: <Widget>[
+                                            SwitchlikeCheckbox(checked: resultadoPergunta11),
+                                          ],
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  resultadoPergunta11
+                                      ? TextField(
+                                    keyboardType: TextInputType.text,
+                                    controller: _nomeController ,
+                                    style: TextStyle(fontSize: 20.0, color: Colors.black),
+                                    autofocus: false,
+                                    onEditingComplete: ()=> FocusScope.of(context).requestFocus(myFocusNode),
+                                    decoration: InputDecoration(
+                                      labelText: "Especifique: ",
+                                      labelStyle: TextStyle(fontSize: 20.0, color: rosaPaula),
+                                      hintText: "Especifique..",
+                                      focusedBorder: UnderlineInputBorder( //mudar cor da linha
+                                          borderSide: BorderSide(color: rosaPaula)
+                                      ),
+                                      //icon: Icon(FontAwesomeIcons.user,color: rosaPaula),
+                                    ),
+                                  )
+                                      : Container()
+                                ],
+                              )
+                          ),
+                          //Decima segunda Pergunta
+                          Padding(
+                              padding: EdgeInsets.only(top:10, right: 30,left: 30),
+                              child: Column(
+                                children: <Widget>[
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    children: <Widget>[
+                                      Text("• Existe algum problema que \n julgue ser necessário informar \n ao profissional?",
+                                        style: TextStyle(
+                                            fontSize: 20
+                                        ),
+                                        maxLines: 3,
+                                      ),
+                                      GestureDetector(
+                                        onTap: (){
+                                          setState(() {
+                                            resultadoPergunta12 = !resultadoPergunta12;
+                                          });
+                                        },
+                                        behavior: HitTestBehavior.translucent,
+                                        child: Row(
+                                          mainAxisAlignment: MainAxisAlignment.center,
+                                          children: <Widget>[
+                                            SwitchlikeCheckbox(checked: resultadoPergunta12),
+                                          ],
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  resultadoPergunta12
                                       ? TextField(
                                     keyboardType: TextInputType.text,
                                     controller: _nomeController ,
