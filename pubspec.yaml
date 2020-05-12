@@ -30,6 +30,8 @@ dependencies:
   flutter_datetime_picker: ^1.3.8
   lite_rolling_switch: ^0.1.1
   simple_animations: ^2.2.0
+  auto_size_text: ^2.1.0
+  signature: ^3.1.1
   firebase_core: ^0.4.4+3 #recursos básicos
   #cloud_firestore: ^0.13.5 #banco de dados
   firebase_storage: ^3.1.5 #armazenamento de arquivos

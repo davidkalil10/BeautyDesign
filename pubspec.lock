@@ -22,6 +22,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.4.1"
+  auto_size_text:
+    dependency: "direct main"
+    description:
+      name: auto_size_text
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "2.1.0"
   boolean_selector:
     dependency: transitive
     description:
@@ -260,7 +267,7 @@ packages:
       name: sa_multi_tween
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.1.0"
+    version: "1.1.1"
   sa_stateless_animation:
     dependency: transitive
     description:
@@ -275,6 +282,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.1.2"
+  signature:
+    dependency: "direct main"
+    description:
+      name: signature
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "3.1.1"
   simple_animations:
     dependency: "direct main"
     description:
