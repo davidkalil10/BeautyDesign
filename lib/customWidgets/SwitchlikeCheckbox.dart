@@ -7,7 +7,7 @@ enum _CheckboxProps { paddingLeft, color, text, rotation }
 
 class SwitchlikeCheckbox extends StatelessWidget {
   final bool checked;
-  Color rosaPaula = Color(0xffFA879E);
+  final Color rosaPaula = Color(0xffFA879E);
 
   SwitchlikeCheckbox({this.checked});
 

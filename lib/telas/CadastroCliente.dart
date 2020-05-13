@@ -1,9 +1,9 @@
 import 'package:beautydesign/customWidgets/SwitchlikeCheckbox.dart';
+import 'package:beautydesign/customWidgets/TextfieldFormulario.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
-import 'package:lite_rolling_switch/lite_rolling_switch.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:signature/signature.dart';
 
@@ -13,7 +13,7 @@ class CadastroCliente extends StatefulWidget {
 }
 
 //DRAWER DA ASSINATURA
-final SignatureController _controller = SignatureController(
+final SignatureController _signatureController = SignatureController(
   penStrokeWidth: 4,
   penColor: Colors.black54,
   exportBackgroundColor: Colors.white70,
@@ -56,9 +56,10 @@ class _CadastroClienteState extends State<CadastroCliente> {
   TextEditingController _p12Controller = TextEditingController();
 
   //MASCARAS DE TEXT FIELD
-  var mascaraTelefone = new MaskTextInputFormatter(mask: '+## (##) #####-####', filter: { "#": RegExp(r'[0-9]') });
-  var mascaraCPF = new MaskTextInputFormatter(mask: '###.###.###-##');
-  var mascaraNascimento = new MaskTextInputFormatter(mask: '##/##/####');
+  final mascaraTelefone = new MaskTextInputFormatter(mask: '+## (##) #####-####', filter: { "#": RegExp(r'[0-9]') });
+  final mascaraCPF = new MaskTextInputFormatter(mask: '###.###.###-##');
+  final mascaraNascimento = new MaskTextInputFormatter(mask: '##/##/####');
+  final mascaraInstagram = new MaskTextInputFormatter(mask: r'@AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA');
 
   //Controles icones
   bool _infoContato = false;
@@ -103,15 +104,13 @@ class _CadastroClienteState extends State<CadastroCliente> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     myFocusNode = FocusNode();
-    _controller.addListener(() => print("Value changed"));
+    _signatureController .addListener(() => print("Value changed"));
   }
 
   @override
   void dispose() {
-    // TODO: implement dispose
     myFocusNode.dispose();
     super.dispose();
   }
@@ -140,8 +139,15 @@ class _CadastroClienteState extends State<CadastroCliente> {
                             _infoContato = !_infoContato;
                           });
                         },
-                        label: Text("Informações de Contato",style: TextStyle(fontSize: 25.0, fontWeight: FontWeight.bold, color: rosaPaula),),
-                        icon: _infoContato? Icon(FontAwesomeIcons.chevronDown,color: rosaPaula,) : Icon(FontAwesomeIcons.chevronRight,color: rosaPaula,),
+                        label: Text(
+                          "Informações de Contato",
+                          style: TextStyle(
+                            fontSize: 25.0,
+                            fontWeight: FontWeight.bold,
+                            color: rosaPaula,
+                          ),
+                        ),
+                        icon: _infoContato? Icon(FontAwesomeIcons.chevronDown,color: rosaPaula) : Icon(FontAwesomeIcons.chevronRight,color: rosaPaula,),
                       ),
                       _infoContato
                        ? Column(
@@ -151,22 +157,13 @@ class _CadastroClienteState extends State<CadastroCliente> {
                             children: <Widget>[
                               Padding(
                                 padding: EdgeInsets.only(right: 10, left: 10),
-                                child: TextField(
+                                child: TextFieldFormulario(
                                   keyboardType: TextInputType.text,
-                                  controller: _nomeController ,
-                                  style: TextStyle(fontSize: 20.0, color: Colors.black),
-                                  autofocus: false,
-                                  onEditingComplete: ()=> FocusScope.of(context).requestFocus(myFocusNode),
-                                  decoration: InputDecoration(
-                                    labelText: "Nome completo",
-                                    labelStyle: TextStyle(fontSize: 20.0, color: rosaPaula),
-                                    hintText: "Digite seu nome completo..",
-                                    focusedBorder: UnderlineInputBorder( //mudar cor da linha
-                                        borderSide: BorderSide(color: rosaPaula)
-                                    ),
-                                    icon: Icon(FontAwesomeIcons.user,color: rosaPaula),
-                                  ),
-                                ),
+                                  labelText: "Nome completo",
+                                  hintText: "Digite seu nome completo..",
+                                  controller: _nomeController,
+                                  icon: Icon(FontAwesomeIcons.user, color: rosaPaula),
+                                )
                               ),
                             ],
                           ),
@@ -175,40 +172,24 @@ class _CadastroClienteState extends State<CadastroCliente> {
                             children: <Widget>[
                               Padding(
                                 padding: EdgeInsets.only(right: 10, left: 10),
-                                child: TextField(
+                                child: TextFieldFormulario(
                                   keyboardType: TextInputType.datetime,
+                                  labelText: "Nascimento",
+                                  hintText: "Digite sua data de nascimento..",
                                   controller: _nascimentoController,
-                                  style: TextStyle(fontSize: 20.0, color: Colors.black),
-                                  autofocus: false,
-                                  inputFormatters: [mascaraNascimento],
-                                  decoration: InputDecoration(
-                                    labelText: "Nascimento",
-                                    labelStyle: TextStyle(fontSize: 20.0, color: rosaPaula),
-                                    hintText: "Digite sua dat de nascimento..",
-                                    focusedBorder: UnderlineInputBorder( //mudar cor da linha
-                                        borderSide: BorderSide(color: rosaPaula)
-                                    ),
-                                    icon: Icon(FontAwesomeIcons.birthdayCake,color: rosaPaula),
-                                  ),
+                                  icon: Icon(FontAwesomeIcons.birthdayCake, color: rosaPaula),
+                                  mascara: [mascaraNascimento],
                                 ),
                               ),
                               Padding(
                                 padding: EdgeInsets.only(right: 10, left: 10),
-                                child: TextField(
+                                child: TextFieldFormulario(
                                   keyboardType: TextInputType.phone,
-                                  controller: _telefoneController ,
-                                  style: TextStyle(fontSize: 20.0, color: Colors.black),
-                                  autofocus: false,
-                                  inputFormatters: [mascaraTelefone],
-                                  decoration: InputDecoration(
-                                    labelText: "Telefone",
-                                    labelStyle: TextStyle(fontSize: 20.0, color: rosaPaula),
-                                    hintText: "+xx (xx) xxxxx-xxxx",
-                                    focusedBorder: UnderlineInputBorder( //mudar cor da linha
-                                        borderSide: BorderSide(color: rosaPaula)
-                                    ),
-                                    icon: Icon(FontAwesomeIcons.whatsapp,color: rosaPaula),
-                                  ),
+                                  labelText: "Telefone",
+                                  hintText: "+xx (xx) xxxxx-xxxx",
+                                  controller: _telefoneController,
+                                  icon: Icon(FontAwesomeIcons.whatsapp, color: rosaPaula),
+                                  mascara: [mascaraTelefone],
                                 ),
                               )
                             ],
@@ -218,40 +199,25 @@ class _CadastroClienteState extends State<CadastroCliente> {
                             children: <Widget>[
                               Padding(
                                 padding: EdgeInsets.only(right: 10, left: 10),
-                                child: TextField(
-                                  keyboardType: TextInputType.emailAddress,
+                                child: TextFieldFormulario(
+                                  keyboardType: TextInputType.text,
+                                  labelText: "Instagram",
+                                  hintText: "@..",
                                   controller: _instagramController,
-                                  style: TextStyle(fontSize: 20.0, color: Colors.black),
-                                  autofocus: false,
-                                  decoration: InputDecoration(
-                                    labelText: "Instagram",
-                                    labelStyle: TextStyle(fontSize: 20.0, color: rosaPaula),
-                                    hintText: "@..",
-                                    focusedBorder: UnderlineInputBorder( //mudar cor da linha
-                                        borderSide: BorderSide(color: rosaPaula)
-                                    ),
-                                    icon: Icon(FontAwesomeIcons.instagram,color: rosaPaula),
-                                  ),
+                                  icon: Icon(FontAwesomeIcons.instagram, color: rosaPaula),
+                                  mascara: [mascaraInstagram],
                                 ),
                               ),
                               Padding(
                                 padding: EdgeInsets.only(right: 10, left: 10),
-                                child: TextField(
+                                child: TextFieldFormulario(
                                   keyboardType: TextInputType.emailAddress,
-                                  controller: _emailController ,
-                                  style: TextStyle(fontSize: 20.0, color: Colors.black),
-                                  autofocus: false,
-                                  decoration: InputDecoration(
-                                    labelText: "E-mail",
-                                    labelStyle: TextStyle(fontSize: 20.0, color: rosaPaula),
-                                    hintText: "Digite seu e-mail..",
-                                    focusedBorder: UnderlineInputBorder( //mudar cor da linha
-                                        borderSide: BorderSide(color: rosaPaula)
-                                    ),
-                                    icon: Icon(FontAwesomeIcons.at,color: rosaPaula),
-                                  ),
+                                  labelText: "E-mail",
+                                  hintText: "Digite seu e-mail..",
+                                  controller: _emailController,
+                                  icon: Icon(FontAwesomeIcons.at, color: rosaPaula),
                                 ),
-                              )
+                              ),
                             ],
                           ),
                           //Atividade e CPF
@@ -259,41 +225,25 @@ class _CadastroClienteState extends State<CadastroCliente> {
                             children: <Widget>[
                               Padding(
                                 padding: EdgeInsets.only(right: 10, left: 10),
-                                child: TextField(
+                                child: TextFieldFormulario(
                                   keyboardType: TextInputType.text,
+                                  labelText: "Atividade",
+                                  hintText: "Digite seu ramo de atividade..",
                                   controller: _atividadeController,
-                                  style: TextStyle(fontSize: 20.0, color: Colors.black),
-                                  autofocus: false,
-                                  decoration: InputDecoration(
-                                    labelText: "Atividade",
-                                    labelStyle: TextStyle(fontSize: 20.0, color: rosaPaula),
-                                    hintText: "Digite seu ramo de atividade..",
-                                    focusedBorder: UnderlineInputBorder( //mudar cor da linha
-                                        borderSide: BorderSide(color: rosaPaula)
-                                    ),
-                                    icon: Icon(FontAwesomeIcons.briefcase,color: rosaPaula),
-                                  ),
+                                  icon: Icon(FontAwesomeIcons.briefcase, color: rosaPaula),
                                 ),
                               ),
                               Padding(
                                 padding: EdgeInsets.only(right: 10, left: 10),
-                                child: TextField(
+                                child: TextFieldFormulario(
                                   keyboardType: TextInputType.number,
-                                  controller: _cpfController ,
-                                  style: TextStyle(fontSize: 20.0, color: Colors.black),
-                                  autofocus: false,
-                                  inputFormatters: [mascaraCPF],
-                                  decoration: InputDecoration(
-                                    labelText: "CPF",
-                                    labelStyle: TextStyle(fontSize: 20.0, color: rosaPaula),
-                                    hintText: "Digite seu CPF..",
-                                    focusedBorder: UnderlineInputBorder( //mudar cor da linha
-                                        borderSide: BorderSide(color: rosaPaula)
-                                    ),
-                                    icon: Icon(FontAwesomeIcons.idCard,color: rosaPaula),
-                                  ),
+                                  labelText: "CPF",
+                                  hintText: "Digite seu CPF..",
+                                  controller: _cpfController,
+                                  icon: Icon(FontAwesomeIcons.idCard, color:rosaPaula),
+                                  mascara: [mascaraCPF],
                                 ),
-                              )
+                              ),
                             ],
                           ),
                           //Endereço e como conheceu
@@ -301,44 +251,24 @@ class _CadastroClienteState extends State<CadastroCliente> {
                             children: <Widget>[
                               Padding(
                                 padding: EdgeInsets.only(right: 10, left: 10),
-                                child: TextField(
+                                child: TextFieldFormulario(
                                   keyboardType: TextInputType.text,
+                                  labelText: "Endereço",
+                                  hintText: "Digite seu endereço..",
                                   controller: _enderecoController,
-                                  style: TextStyle(fontSize: 20.0, color: Colors.black),
-                                  autofocus: false,
-                                  minLines: 1,
-                                  maxLines: 2,
-                                  decoration: InputDecoration(
-                                    labelText: "Endereço",
-                                    labelStyle: TextStyle(fontSize: 20.0, color: rosaPaula),
-                                    hintText: "Digite seu endereço..",
-                                    focusedBorder: UnderlineInputBorder( //mudar cor da linha
-                                        borderSide: BorderSide(color: rosaPaula)
-                                    ),
-                                    icon: Icon(FontAwesomeIcons.mapMarkerAlt,color: rosaPaula),
-                                  ),
+                                  icon: Icon(FontAwesomeIcons.mapMarkerAlt, color: rosaPaula),
                                 ),
                               ),
                               Padding(
                                 padding: EdgeInsets.only(right: 10, left: 10),
-                                child: TextField(
+                                child: TextFieldFormulario(
                                   keyboardType: TextInputType.text,
-                                  controller: _comoconheceuController ,
-                                  style: TextStyle(fontSize: 20.0, color: Colors.black),
-                                  autofocus: false,
-                                  minLines: 1,
-                                  maxLines: 2,
-                                  decoration: InputDecoration(
-                                    labelText: "Como nos conheceu",
-                                    labelStyle: TextStyle(fontSize: 20.0, color: rosaPaula),
-                                    hintText: "Digite como nos conheceu..",
-                                    focusedBorder: UnderlineInputBorder( //mudar cor da linha
-                                        borderSide: BorderSide(color: rosaPaula)
-                                    ),
-                                    icon: Icon(FontAwesomeIcons.questionCircle,color: rosaPaula),
-                                  ),
+                                  labelText: "Como nos conheceu",
+                                  hintText: "Digite como nos conheceu..",
+                                  controller: _comoconheceuController,
+                                  icon: Icon(FontAwesomeIcons.questionCircle, color: rosaPaula),
                                 ),
-                              )
+                              ),
                             ],
                           )
                         ],
@@ -468,8 +398,8 @@ class _CadastroClienteState extends State<CadastroCliente> {
                             _infoAvaliacao = !_infoAvaliacao;
                           });
                         },
-                        label: Text("Avaliação",style: TextStyle(fontSize: 25.0, fontWeight: FontWeight.bold, color: rosaPaula),),
-                        icon: _infoAvaliacao? Icon(FontAwesomeIcons.chevronDown,color: rosaPaula,) : Icon(FontAwesomeIcons.chevronRight,color: rosaPaula,),
+                        label: Text("Avaliação",style: TextStyle(fontSize: 25.0, fontWeight: FontWeight.bold, color: rosaPaula,),),
+                        icon: _infoAvaliacao? Icon(FontAwesomeIcons.chevronDown,color: rosaPaula) : Icon(FontAwesomeIcons.chevronRight,color: rosaPaula),
                       ),
                       _infoAvaliacao
                       ? Column(
@@ -506,25 +436,13 @@ class _CadastroClienteState extends State<CadastroCliente> {
                             ],
                           ),
                             resultadoPergunta1
-                              ? TextField(
-                            keyboardType: TextInputType.text,
-                            controller: _p1Controller ,
-                              maxLines: 3,
-                              minLines: 1,
-                            style: TextStyle(fontSize: 20.0, color: Colors.black),
-                            autofocus: false,
-                            onEditingComplete: ()=> FocusScope.of(context).requestFocus(myFocusNode),
-                            decoration: InputDecoration(
-                              labelText: "Especifique: ",
-                              labelStyle: TextStyle(fontSize: 20.0, color: rosaPaula),
-                              hintText: "Especifique..",
-                              focusedBorder: UnderlineInputBorder( //mudar cor da linha
-                                  borderSide: BorderSide(color: rosaPaula)
-                              ),
-                              //icon: Icon(FontAwesomeIcons.user,color: rosaPaula),
-                            ),
-                          )
-                              : Container()
+                            ? TextFieldFormulario(
+                                  keyboardType: TextInputType.text,
+                                  labelText: "Especifique: ",
+                                  hintText: "Especifique..",
+                                  controller: _p1Controller,
+                                )
+                            : Container()
                         ],
                       )
                           ),
@@ -560,24 +478,12 @@ class _CadastroClienteState extends State<CadastroCliente> {
                                     ],
                                   ),
                                   resultadoPergunta2
-                                      ? TextField(
-                                    keyboardType: TextInputType.text,
-                                    controller: _p2Controller ,
-                                    maxLines: 3,
-                                    minLines: 1,
-                                    style: TextStyle(fontSize: 20.0, color: Colors.black),
-                                    autofocus: false,
-                                    onEditingComplete: ()=> FocusScope.of(context).requestFocus(myFocusNode),
-                                    decoration: InputDecoration(
-                                      labelText: "Especifique: ",
-                                      labelStyle: TextStyle(fontSize: 20.0, color: rosaPaula),
-                                      hintText: "Especifique..",
-                                      focusedBorder: UnderlineInputBorder( //mudar cor da linha
-                                          borderSide: BorderSide(color: rosaPaula)
-                                      ),
-                                      //icon: Icon(FontAwesomeIcons.user,color: rosaPaula),
-                                    ),
-                                  )
+                                      ? TextFieldFormulario(
+                                  keyboardType: TextInputType.text,
+                                  labelText: "Especifique: ",
+                                  hintText: "Especifique..",
+                                  controller: _p2Controller,
+                                )
                                       : Container()
                                 ],
                               )
@@ -614,24 +520,12 @@ class _CadastroClienteState extends State<CadastroCliente> {
                                     ],
                                   ),
                                   resultadoPergunta3
-                                      ? TextField(
-                                    keyboardType: TextInputType.text,
-                                    controller: _p3Controller ,
-                                    maxLines: 3,
-                                    minLines: 1,
-                                    style: TextStyle(fontSize: 20.0, color: Colors.black),
-                                    autofocus: false,
-                                    onEditingComplete: ()=> FocusScope.of(context).requestFocus(myFocusNode),
-                                    decoration: InputDecoration(
-                                      labelText: "Especifique: ",
-                                      labelStyle: TextStyle(fontSize: 20.0, color: rosaPaula),
-                                      hintText: "Especifique..",
-                                      focusedBorder: UnderlineInputBorder( //mudar cor da linha
-                                          borderSide: BorderSide(color: rosaPaula)
-                                      ),
-                                      //icon: Icon(FontAwesomeIcons.user,color: rosaPaula),
-                                    ),
-                                  )
+                                      ? TextFieldFormulario(
+                                  keyboardType: TextInputType.text,
+                                  labelText: "Especifique: ",
+                                  hintText: "Especifique..",
+                                  controller: _p3Controller,
+                                )
                                       : Container()
                                 ],
                               )
@@ -668,24 +562,12 @@ class _CadastroClienteState extends State<CadastroCliente> {
                                     ],
                                   ),
                                   resultadoPergunta4
-                                      ? TextField(
-                                    keyboardType: TextInputType.text,
-                                    controller: _p4Controller ,
-                                    maxLines: 3,
-                                    minLines: 1,
-                                    style: TextStyle(fontSize: 20.0, color: Colors.black),
-                                    autofocus: false,
-                                    onEditingComplete: ()=> FocusScope.of(context).requestFocus(myFocusNode),
-                                    decoration: InputDecoration(
-                                      labelText: "Especifique: ",
-                                      labelStyle: TextStyle(fontSize: 20.0, color: rosaPaula),
-                                      hintText: "Especifique..",
-                                      focusedBorder: UnderlineInputBorder( //mudar cor da linha
-                                          borderSide: BorderSide(color: rosaPaula)
-                                      ),
-                                      //icon: Icon(FontAwesomeIcons.user,color: rosaPaula),
-                                    ),
-                                  )
+                                      ? TextFieldFormulario(
+                                  keyboardType: TextInputType.text,
+                                  labelText: "Especifique: ",
+                                  hintText: "Especifique..",
+                                  controller: _p4Controller,
+                                )
                                       : Container()
                                 ],
                               )
@@ -722,24 +604,12 @@ class _CadastroClienteState extends State<CadastroCliente> {
                                     ],
                                   ),
                                   resultadoPergunta5
-                                      ? TextField(
-                                    keyboardType: TextInputType.text,
-                                    controller: _p5Controller ,
-                                    maxLines: 3,
-                                    minLines: 1,
-                                    style: TextStyle(fontSize: 20.0, color: Colors.black),
-                                    autofocus: false,
-                                    onEditingComplete: ()=> FocusScope.of(context).requestFocus(myFocusNode),
-                                    decoration: InputDecoration(
-                                      labelText: "Especifique: ",
-                                      labelStyle: TextStyle(fontSize: 20.0, color: rosaPaula),
-                                      hintText: "Especifique..",
-                                      focusedBorder: UnderlineInputBorder( //mudar cor da linha
-                                          borderSide: BorderSide(color: rosaPaula)
-                                      ),
-                                      //icon: Icon(FontAwesomeIcons.user,color: rosaPaula),
-                                    ),
-                                  )
+                                      ? TextFieldFormulario(
+                                  keyboardType: TextInputType.text,
+                                  labelText: "Especifique: ",
+                                  hintText: "Especifique..",
+                                  controller: _p5Controller,
+                                )
                                       : Container()
                                 ],
                               )
@@ -776,24 +646,12 @@ class _CadastroClienteState extends State<CadastroCliente> {
                                     ],
                                   ),
                                   resultadoPergunta6
-                                      ? TextField(
-                                    keyboardType: TextInputType.text,
-                                    controller: _p6Controller ,
-                                    maxLines: 3,
-                                    minLines: 1,
-                                    style: TextStyle(fontSize: 20.0, color: Colors.black),
-                                    autofocus: false,
-                                    onEditingComplete: ()=> FocusScope.of(context).requestFocus(myFocusNode),
-                                    decoration: InputDecoration(
-                                      labelText: "Especifique: ",
-                                      labelStyle: TextStyle(fontSize: 20.0, color: rosaPaula),
-                                      hintText: "Especifique..",
-                                      focusedBorder: UnderlineInputBorder( //mudar cor da linha
-                                          borderSide: BorderSide(color: rosaPaula)
-                                      ),
-                                      //icon: Icon(FontAwesomeIcons.user,color: rosaPaula),
-                                    ),
-                                  )
+                                      ? TextFieldFormulario(
+                                  keyboardType: TextInputType.text,
+                                  labelText: "Especifique: ",
+                                  hintText: "Especifique..",
+                                  controller: _p6Controller,
+                                )
                                       : Container()
                                 ],
                               )
@@ -830,24 +688,12 @@ class _CadastroClienteState extends State<CadastroCliente> {
                                     ],
                                   ),
                                   resultadoPergunta7
-                                      ? TextField(
-                                    keyboardType: TextInputType.text,
-                                    controller: _p7Controller ,
-                                    maxLines: 3,
-                                    minLines: 1,
-                                    style: TextStyle(fontSize: 20.0, color: Colors.black),
-                                    autofocus: false,
-                                    onEditingComplete: ()=> FocusScope.of(context).requestFocus(myFocusNode),
-                                    decoration: InputDecoration(
-                                      labelText: "Especifique: ",
-                                      labelStyle: TextStyle(fontSize: 20.0, color: rosaPaula),
-                                      hintText: "Especifique..",
-                                      focusedBorder: UnderlineInputBorder( //mudar cor da linha
-                                          borderSide: BorderSide(color: rosaPaula)
-                                      ),
-                                      //icon: Icon(FontAwesomeIcons.user,color: rosaPaula),
-                                    ),
-                                  )
+                                      ? TextFieldFormulario(
+                                  keyboardType: TextInputType.text,
+                                  labelText: "Especifique: ",
+                                  hintText: "Especifique..",
+                                  controller: _p7Controller,
+                                )
                                       : Container()
                                 ],
                               )
@@ -884,24 +730,12 @@ class _CadastroClienteState extends State<CadastroCliente> {
                                     ],
                                   ),
                                   resultadoPergunta8
-                                      ? TextField(
-                                    keyboardType: TextInputType.text,
-                                    controller: _p8Controller ,
-                                    maxLines: 3,
-                                    minLines: 1,
-                                    style: TextStyle(fontSize: 20.0, color: Colors.black),
-                                    autofocus: false,
-                                    onEditingComplete: ()=> FocusScope.of(context).requestFocus(myFocusNode),
-                                    decoration: InputDecoration(
-                                      labelText: "Especifique: ",
-                                      labelStyle: TextStyle(fontSize: 20.0, color: rosaPaula),
-                                      hintText: "Especifique..",
-                                      focusedBorder: UnderlineInputBorder( //mudar cor da linha
-                                          borderSide: BorderSide(color: rosaPaula)
-                                      ),
-                                      //icon: Icon(FontAwesomeIcons.user,color: rosaPaula),
-                                    ),
-                                  )
+                                      ? TextFieldFormulario(
+                                  keyboardType: TextInputType.text,
+                                  labelText: "Especifique: ",
+                                  hintText: "Especifique..",
+                                  controller: _p8Controller,
+                                )
                                       : Container()
                                 ],
                               )
@@ -938,24 +772,12 @@ class _CadastroClienteState extends State<CadastroCliente> {
                                     ],
                                   ),
                                   resultadoPergunta9
-                                      ? TextField(
-                                    keyboardType: TextInputType.text,
-                                    controller: _p9Controller ,
-                                    maxLines: 3,
-                                    minLines: 1,
-                                    style: TextStyle(fontSize: 20.0, color: Colors.black),
-                                    autofocus: false,
-                                    onEditingComplete: ()=> FocusScope.of(context).requestFocus(myFocusNode),
-                                    decoration: InputDecoration(
-                                      labelText: "Especifique: ",
-                                      labelStyle: TextStyle(fontSize: 20.0, color: rosaPaula),
-                                      hintText: "Especifique..",
-                                      focusedBorder: UnderlineInputBorder( //mudar cor da linha
-                                          borderSide: BorderSide(color: rosaPaula)
-                                      ),
-                                      //icon: Icon(FontAwesomeIcons.user,color: rosaPaula),
-                                    ),
-                                  )
+                                      ? TextFieldFormulario(
+                                  keyboardType: TextInputType.text,
+                                  labelText: "Especifique: ",
+                                  hintText: "Especifique..",
+                                  controller: _p9Controller,
+                                )
                                       : Container()
                                 ],
                               )
@@ -992,24 +814,12 @@ class _CadastroClienteState extends State<CadastroCliente> {
                                     ],
                                   ),
                                   resultadoPergunta10
-                                      ? TextField(
-                                    keyboardType: TextInputType.text,
-                                    controller: _p10Controller ,
-                                    maxLines: 3,
-                                    minLines: 1,
-                                    style: TextStyle(fontSize: 20.0, color: Colors.black),
-                                    autofocus: false,
-                                    onEditingComplete: ()=> FocusScope.of(context).requestFocus(myFocusNode),
-                                    decoration: InputDecoration(
-                                      labelText: "Especifique: ",
-                                      labelStyle: TextStyle(fontSize: 20.0, color: rosaPaula),
-                                      hintText: "Especifique..",
-                                      focusedBorder: UnderlineInputBorder( //mudar cor da linha
-                                          borderSide: BorderSide(color: rosaPaula)
-                                      ),
-                                      //icon: Icon(FontAwesomeIcons.user,color: rosaPaula),
-                                    ),
-                                  )
+                                      ? TextFieldFormulario(
+                                  keyboardType: TextInputType.text,
+                                  labelText: "Especifique: ",
+                                  hintText: "Especifique..",
+                                  controller: _p10Controller,
+                                )
                                       : Container()
                                 ],
                               )
@@ -1046,24 +856,12 @@ class _CadastroClienteState extends State<CadastroCliente> {
                                     ],
                                   ),
                                   resultadoPergunta11
-                                      ? TextField(
-                                    keyboardType: TextInputType.text,
-                                    controller: _p11Controller ,
-                                    maxLines: 3,
-                                    minLines: 1,
-                                    style: TextStyle(fontSize: 20.0, color: Colors.black),
-                                    autofocus: false,
-                                    onEditingComplete: ()=> FocusScope.of(context).requestFocus(myFocusNode),
-                                    decoration: InputDecoration(
-                                      labelText: "Especifique: ",
-                                      labelStyle: TextStyle(fontSize: 20.0, color: rosaPaula),
-                                      hintText: "Especifique..",
-                                      focusedBorder: UnderlineInputBorder( //mudar cor da linha
-                                          borderSide: BorderSide(color: rosaPaula)
-                                      ),
-                                      //icon: Icon(FontAwesomeIcons.user,color: rosaPaula),
-                                    ),
-                                  )
+                                      ? TextFieldFormulario(
+                                  keyboardType: TextInputType.text,
+                                  labelText: "Especifique: ",
+                                  hintText: "Especifique..",
+                                  controller: _p11Controller,
+                                )
                                       : Container()
                                 ],
                               )
@@ -1072,6 +870,8 @@ class _CadastroClienteState extends State<CadastroCliente> {
                           Padding(
                               padding: EdgeInsets.only(top:10, right: 30,left: 30),
                               child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.stretch,
+                                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                                 children: <Widget>[
                                   Row(
                                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -1100,24 +900,12 @@ class _CadastroClienteState extends State<CadastroCliente> {
                                     ],
                                   ),
                                   resultadoPergunta12
-                                      ? TextField(
-                                    keyboardType: TextInputType.text,
-                                    maxLines: 3,
-                                    minLines: 1,
-                                    controller: _p12Controller ,
-                                    style: TextStyle(fontSize: 20.0, color: Colors.black),
-                                    autofocus: false,
-                                    onEditingComplete: ()=> FocusScope.of(context).requestFocus(myFocusNode),
-                                    decoration: InputDecoration(
-                                      labelText: "Especifique: ",
-                                      labelStyle: TextStyle(fontSize: 20.0, color: rosaPaula),
-                                      hintText: "Especifique..",
-                                      focusedBorder: UnderlineInputBorder( //mudar cor da linha
-                                          borderSide: BorderSide(color: rosaPaula)
-                                      ),
-                                      //icon: Icon(FontAwesomeIcons.user,color: rosaPaula),
-                                    ),
-                                  )
+                                      ? TextFieldFormulario(
+                                  keyboardType: TextInputType.text,
+                                  labelText: "Especifique: ",
+                                  hintText: "Especifique..",
+                                  controller: _p12Controller,
+                                )
                                       : Container()
                                 ],
                               )
@@ -1159,7 +947,7 @@ class _CadastroClienteState extends State<CadastroCliente> {
                                                 "Confirmo que as declarações acima são verdadeiras, não cabendo ao profissional a responsabilidade por informações omitidas nesta avaliação. \n \n"
                                                 "Me comprometo a seguir todos os cuidados necessários após o procedimento.",
                                             style:TextStyle(fontSize: 20),
-                                            maxLines: 15,
+                                            maxLines: 20,
                                           )
                                       ),
                                     ],
@@ -1183,7 +971,7 @@ class _CadastroClienteState extends State<CadastroCliente> {
                                             print('confirm $date');
                                             setState(() {
                                               _dataAssinatura = " Em ${date.day} / ${date.month} / ${date.year} ";
-                                               _controller.clear();
+                                               _signatureController .clear();
                                               _visualizarAssinatura = true;
                                               _assinaturaFeita = false;
                                             });
@@ -1236,7 +1024,7 @@ class _CadastroClienteState extends State<CadastroCliente> {
                                   _visualizarAssinatura?
                                   Center(
                                     child: Signature(
-                                      controller: _controller,
+                                      controller: _signatureController ,
                                       height: 200,
                                       backgroundColor: Colors.grey[200],
                                     ),
@@ -1253,8 +1041,8 @@ class _CadastroClienteState extends State<CadastroCliente> {
                                           icon: const Icon(Icons.check),
                                           color: Colors.white,
                                           onPressed: () async {
-                                            if(_controller.isNotEmpty){
-                                              data = await _controller.toPngBytes();
+                                            if(_signatureController .isNotEmpty){
+                                              data = await _signatureController .toPngBytes();
                                               setState(() {
                                                 _assinaturaFeita = !_assinaturaFeita;
                                                 _visualizarAssinatura = !_visualizarAssinatura;

@@ -1,5 +1,4 @@
 import 'package:beautydesign/Navegar.dart';
-import 'package:beautydesign/telas/TelaPrincipal.dart';
 import 'package:flutter/material.dart';
 
 class Home extends StatefulWidget {
