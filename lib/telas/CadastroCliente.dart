@@ -41,6 +41,20 @@ class _CadastroClienteState extends State<CadastroCliente> {
   TextEditingController _enderecoController = TextEditingController();
   TextEditingController _comoconheceuController = TextEditingController();
 
+
+  TextEditingController _p1Controller = TextEditingController();
+  TextEditingController _p2Controller = TextEditingController();
+  TextEditingController _p3Controller = TextEditingController();
+  TextEditingController _p4Controller = TextEditingController();
+  TextEditingController _p5Controller = TextEditingController();
+  TextEditingController _p6Controller = TextEditingController();
+  TextEditingController _p7Controller = TextEditingController();
+  TextEditingController _p8Controller = TextEditingController();
+  TextEditingController _p9Controller = TextEditingController();
+  TextEditingController _p10Controller = TextEditingController();
+  TextEditingController _p11Controller = TextEditingController();
+  TextEditingController _p12Controller = TextEditingController();
+
   //MASCARAS DE TEXT FIELD
   var mascaraTelefone = new MaskTextInputFormatter(mask: '+## (##) #####-####', filter: { "#": RegExp(r'[0-9]') });
   var mascaraCPF = new MaskTextInputFormatter(mask: '###.###.###-##');
@@ -80,10 +94,10 @@ class _CadastroClienteState extends State<CadastroCliente> {
 
 
   final _buttonOptions = [
-    Atendimentos(1,"Bonny Browns"),
-    Atendimentos(2,"Natural Lips"),
+    Atendimentos(1,"Bonny Browns (Sobrancelha)"),
+    Atendimentos(2,"Natural Lips (Lábios)"),
     Atendimentos(3,"DD Glow"),
-    Atendimentos(4,"Black Lashes"),
+    Atendimentos(4,"Lashes Lifting (Cílios)"),
   ];
 
 
@@ -494,7 +508,7 @@ class _CadastroClienteState extends State<CadastroCliente> {
                             resultadoPergunta1
                               ? TextField(
                             keyboardType: TextInputType.text,
-                            controller: _nomeController ,
+                            controller: _p1Controller ,
                               maxLines: 3,
                               minLines: 1,
                             style: TextStyle(fontSize: 20.0, color: Colors.black),
@@ -548,7 +562,7 @@ class _CadastroClienteState extends State<CadastroCliente> {
                                   resultadoPergunta2
                                       ? TextField(
                                     keyboardType: TextInputType.text,
-                                    controller: _nomeController ,
+                                    controller: _p2Controller ,
                                     maxLines: 3,
                                     minLines: 1,
                                     style: TextStyle(fontSize: 20.0, color: Colors.black),
@@ -602,7 +616,7 @@ class _CadastroClienteState extends State<CadastroCliente> {
                                   resultadoPergunta3
                                       ? TextField(
                                     keyboardType: TextInputType.text,
-                                    controller: _nomeController ,
+                                    controller: _p3Controller ,
                                     maxLines: 3,
                                     minLines: 1,
                                     style: TextStyle(fontSize: 20.0, color: Colors.black),
@@ -656,7 +670,7 @@ class _CadastroClienteState extends State<CadastroCliente> {
                                   resultadoPergunta4
                                       ? TextField(
                                     keyboardType: TextInputType.text,
-                                    controller: _nomeController ,
+                                    controller: _p4Controller ,
                                     maxLines: 3,
                                     minLines: 1,
                                     style: TextStyle(fontSize: 20.0, color: Colors.black),
@@ -710,7 +724,7 @@ class _CadastroClienteState extends State<CadastroCliente> {
                                   resultadoPergunta5
                                       ? TextField(
                                     keyboardType: TextInputType.text,
-                                    controller: _nomeController ,
+                                    controller: _p5Controller ,
                                     maxLines: 3,
                                     minLines: 1,
                                     style: TextStyle(fontSize: 20.0, color: Colors.black),
@@ -764,7 +778,7 @@ class _CadastroClienteState extends State<CadastroCliente> {
                                   resultadoPergunta6
                                       ? TextField(
                                     keyboardType: TextInputType.text,
-                                    controller: _nomeController ,
+                                    controller: _p6Controller ,
                                     maxLines: 3,
                                     minLines: 1,
                                     style: TextStyle(fontSize: 20.0, color: Colors.black),
@@ -818,7 +832,7 @@ class _CadastroClienteState extends State<CadastroCliente> {
                                   resultadoPergunta7
                                       ? TextField(
                                     keyboardType: TextInputType.text,
-                                    controller: _nomeController ,
+                                    controller: _p7Controller ,
                                     maxLines: 3,
                                     minLines: 1,
                                     style: TextStyle(fontSize: 20.0, color: Colors.black),
@@ -872,7 +886,7 @@ class _CadastroClienteState extends State<CadastroCliente> {
                                   resultadoPergunta8
                                       ? TextField(
                                     keyboardType: TextInputType.text,
-                                    controller: _nomeController ,
+                                    controller: _p8Controller ,
                                     maxLines: 3,
                                     minLines: 1,
                                     style: TextStyle(fontSize: 20.0, color: Colors.black),
@@ -926,7 +940,7 @@ class _CadastroClienteState extends State<CadastroCliente> {
                                   resultadoPergunta9
                                       ? TextField(
                                     keyboardType: TextInputType.text,
-                                    controller: _nomeController ,
+                                    controller: _p9Controller ,
                                     maxLines: 3,
                                     minLines: 1,
                                     style: TextStyle(fontSize: 20.0, color: Colors.black),
@@ -980,7 +994,7 @@ class _CadastroClienteState extends State<CadastroCliente> {
                                   resultadoPergunta10
                                       ? TextField(
                                     keyboardType: TextInputType.text,
-                                    controller: _nomeController ,
+                                    controller: _p10Controller ,
                                     maxLines: 3,
                                     minLines: 1,
                                     style: TextStyle(fontSize: 20.0, color: Colors.black),
@@ -1034,7 +1048,7 @@ class _CadastroClienteState extends State<CadastroCliente> {
                                   resultadoPergunta11
                                       ? TextField(
                                     keyboardType: TextInputType.text,
-                                    controller: _nomeController ,
+                                    controller: _p11Controller ,
                                     maxLines: 3,
                                     minLines: 1,
                                     style: TextStyle(fontSize: 20.0, color: Colors.black),
@@ -1090,7 +1104,7 @@ class _CadastroClienteState extends State<CadastroCliente> {
                                     keyboardType: TextInputType.text,
                                     maxLines: 3,
                                     minLines: 1,
-                                    controller: _nomeController ,
+                                    controller: _p12Controller ,
                                     style: TextStyle(fontSize: 20.0, color: Colors.black),
                                     autofocus: false,
                                     onEditingComplete: ()=> FocusScope.of(context).requestFocus(myFocusNode),
@@ -1140,7 +1154,7 @@ class _CadastroClienteState extends State<CadastroCliente> {
                                     children: <Widget>[
                                       Expanded(
                                           child: AutoSizeText(
-                                            "Eu, " + _nomeController.text + " autorizo a realização do procedimento de micropigmentação \n \n"
+                                            "Eu, " + _nomeController.text + ", CPF: " +_cpfController.text + " autorizo a realização do procedimento de micropigmentação \n \n"
                                                 "Autorizo o registro fotográfico do “antes” e “depois”, para documentação e divulgação da profissional. \n \n"
                                                 "Confirmo que as declarações acima são verdadeiras, não cabendo ao profissional a responsabilidade por informações omitidas nesta avaliação. \n \n"
                                                 "Me comprometo a seguir todos os cuidados necessários após o procedimento.",
@@ -1218,7 +1232,7 @@ class _CadastroClienteState extends State<CadastroCliente> {
                                       color: Colors.white,
                                     ),
                                   ),
-                                  _assinaturaFeita? Image.memory(data) : Container(),
+                                  _assinaturaFeita? Padding(padding: EdgeInsets.only(top: 10), child: Image.memory(data),) : Container(),
                                   _visualizarAssinatura?
                                   Center(
                                     child: Signature(
@@ -1274,6 +1288,7 @@ class _CadastroClienteState extends State<CadastroCliente> {
                       :Container()
                     ],
                   ),
+                  //SALVAR E VALIDAR
                   Padding(
                     padding: EdgeInsets.only(top: 20,left: 20, right: 20),
                     child: RaisedButton(
