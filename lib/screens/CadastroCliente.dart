@@ -1,5 +1,5 @@
-import 'package:beautydesign/customWidgets/SwitchlikeCheckbox.dart';
-import 'package:beautydesign/customWidgets/TextfieldFormulario.dart';
+import 'package:beautydesign/components/SwitchlikeCheckbox.dart';
+import 'package:beautydesign/components/TextfieldFormulario.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
