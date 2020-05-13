@@ -3,12 +3,12 @@ import 'package:flutter/material.dart';
 const Color rosaPaula = Color(0xffFA879E);
 
 class CustomDropdown extends StatelessWidget {
-  final Function settedState;
+  final Function onPressed;
   final IconData icon;
   final String label;
 
   const CustomDropdown({
-    this.settedState,
+    this.onPressed,
     this.icon,
     this.label
   });
@@ -16,7 +16,7 @@ class CustomDropdown extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FlatButton.icon(
-      onPressed: settedState,
+      onPressed: onPressed,
       label: Text(
         label,
         style: TextStyle(
