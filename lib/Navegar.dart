@@ -37,7 +37,7 @@ class _NavegarState extends State<Navegar> {
             color: Colors.white,
             opacity: 1
         ),
-        backgroundColor: rosaPaula,
+        backgroundColor: Theme.of(context).accentColor, //substituição do rosaPaula
         title: Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: <Widget>[
@@ -45,15 +45,9 @@ class _NavegarState extends State<Navegar> {
               style: TextStyle(
                 fontWeight: FontWeight.bold,
                 fontSize: 20,
+                color: Colors.white
               ),
             ),
-            //Icon(Icons.assessment),
-            /*Text("BEAUTY DESIGN",
-              style: TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 20,
-              ),
-            ),*/
           ],
         ),
       ),
