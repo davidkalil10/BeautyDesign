@@ -31,7 +31,8 @@ class CustomButton extends StatelessWidget {
             color: rosaPaula,
             padding: EdgeInsets.symmetric(
                 vertical: 15), //padding para aumentar tamanho do botao
-            onPressed: () {}),
+            onPressed: onPressed
+        ),
       ),
     );
   }

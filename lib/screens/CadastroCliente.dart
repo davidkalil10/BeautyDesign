@@ -2,6 +2,8 @@ import 'package:beautydesign/components/CustomButton.dart';
 import 'package:beautydesign/components/CustomDropdown.dart';
 import 'package:beautydesign/components/SwitchlikeCheckbox.dart';
 import 'package:beautydesign/components/TextFieldFormulario.dart';
+import 'package:beautydesign/components/TextFieldFormularioTop.dart';
+import 'package:beautydesign/components/cliente.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
@@ -59,14 +61,72 @@ class _CadastroClienteState extends State<CadastroCliente> {
       mask: '+## (##) #####-####', filter: {"#": RegExp(r'[0-9]')});
   final mascaraCPF = new MaskTextInputFormatter(mask: '###.###.###-##');
   final mascaraNascimento = new MaskTextInputFormatter(mask: '##/##/####');
-  final mascaraInstagram =
-      new MaskTextInputFormatter(mask: r'@AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA');
+  final mascaraInstagram = new MaskTextInputFormatter(mask: r'@AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA');
 
   //Controles icones
   bool _infoContato = false;
   bool _infoTratamento = true;
   bool _infoAvaliacao = true;
   bool _infoAutorizacao = true;
+
+
+  //VALIDADORES FORMULARIO
+  final GlobalKey<FormState> _formKey = new GlobalKey<FormState>();
+  DadosCliente _cliente = new DadosCliente();
+
+  String _validarNome(String value) {
+    if (value.length <= 2) {return 'Insira um nome valido';}  return null;
+  }
+  String _validarNascimento(String value) {
+    if (value.length < 10) {return 'Insira uma data correta';}  return null;
+  }
+  String _validarTelefone(String value) {
+    if (value.length < 18) {return 'Insira um telefone correto';}  return null;
+  }
+  String _validarInstagram(String value) {
+    if (value.length <= 2) {return 'Insira um ID valido';}  return null;
+  }
+  String _validarEmail(String value) {
+    if (value.length <= 2) {return 'Insira um e-mail valido';}  return null;
+  }
+  String _validarAtividade(String value) {
+    if (value.length <= 2) {return 'Preencha a atividade';}  return null;
+  }
+  String _validarCPF(String value) {
+    if (value.length < 14) {return 'Insira um CPF valido';}  return null;
+  }
+  String _validarEndereco(String value) {
+    if (value.length <= 2) {return 'Insira um endereço válido';}  return null;
+  }
+  String _validarComoConheceu(String value) {
+    if (value.length <= 2) {return 'Preencha como nos conheceu';}  return null;
+  }
+
+   void _validarCampos() {
+     print("passei por aqui");
+    // First validate form.
+    if (this._formKey.currentState.validate()) {
+       _formKey.currentState.save();
+      // Save our form now.
+      print('Printing dados do cliente');
+      print('Nome: ${_cliente.nome}');
+      print('Nascimento: ${_cliente.nascimento}');
+      print('Telefone: ${_cliente.telefone}');
+      print('Instagram: ${_cliente.instagram}');
+      print('Email: ${_cliente.email}');
+      print('Atividade: ${_cliente.atividade}');
+      print('cpf: ${_cliente.cpf}');
+      print('endereço: ${_cliente.endereco}');
+      print('como conheceu: ${_cliente.comoConheceu}');
+    }else{
+      print('Há dados invalidos');
+    }
+  }
+
+  _testeFunc(){
+    print("testando");
+  }
+
 
   //Variáveis iniciais
   Color rosaPaula = Color(0xffFA879E);
@@ -124,6 +184,7 @@ class _CadastroClienteState extends State<CadastroCliente> {
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
+                  //INFORMAÇÕES DE CONTATO
                   CustomDropdown(
                       label: "Informações de Contato",
                       onPressed: () {
@@ -131,122 +192,145 @@ class _CadastroClienteState extends State<CadastroCliente> {
                           _infoContato = !_infoContato;
                         });
                       },
-                      icon: _infoContato
-                          ? FontAwesomeIcons.chevronDown
-                          : FontAwesomeIcons.chevronRight),
+                      icon: _infoContato ? FontAwesomeIcons.chevronDown: FontAwesomeIcons.chevronRight),
                   _infoContato
                       ? Column(
                           children: <Widget>[
-                            TextFieldFormulario(
-                              keyboardType: TextInputType.text,
-                              labelText: "Nome completo",
-                              hintText: "Digite seu nome completo..",
-                              controller: _nomeController,
-                              icon: Icon(FontAwesomeIcons.user,
-                                  color: rosaPaula),
-                            ),
-                            TextFieldFormulario(
-                              keyboardType: TextInputType.datetime,
-                              labelText: "Nascimento",
-                              hintText: "Digite sua data de nascimento..",
-                              controller: _nascimentoController,
-                              icon: Icon(FontAwesomeIcons.birthdayCake,
-                                  color: rosaPaula),
-                              mascara: [mascaraNascimento],
-                            ),
-                            TextFieldFormulario(
-                              keyboardType: TextInputType.phone,
-                              labelText: "Telefone",
-                              hintText: "+xx (xx) xxxxx-xxxx",
-                              controller: _telefoneController,
-                              icon: Icon(FontAwesomeIcons.whatsapp,
-                                  color: rosaPaula),
-                              mascara: [mascaraTelefone],
-                            ),
-                            //Instagram e Email
-                            TextFieldFormulario(
-                              keyboardType: TextInputType.text,
-                              labelText: "Instagram",
-                              hintText: "@..",
-                              controller: _instagramController,
-                              icon: Icon(FontAwesomeIcons.instagram,
-                                  color: rosaPaula),
-                              mascara: [mascaraInstagram],
-                            ),
-                            TextFieldFormulario(
-                              keyboardType: TextInputType.emailAddress,
-                              labelText: "E-mail",
-                              hintText: "Digite seu e-mail..",
-                              controller: _emailController,
-                              icon: Icon(FontAwesomeIcons.at,
-                                  color: rosaPaula),
-                            ),
-                            //Atividade e CPF
-                            TextFieldFormulario(
-                              keyboardType: TextInputType.text,
-                              labelText: "Atividade",
-                              hintText: "Digite seu ramo de atividade..",
-                              controller: _atividadeController,
-                              icon: Icon(FontAwesomeIcons.briefcase,
-                                  color: rosaPaula),
-                            ),
-                            TextFieldFormulario(
-                              keyboardType: TextInputType.number,
-                              labelText: "CPF",
-                              hintText: "Digite seu CPF..",
-                              controller: _cpfController,
-                              icon: Icon(FontAwesomeIcons.idCard,
-                                  color: rosaPaula),
-                              mascara: [mascaraCPF],
-                            ),
-                            //Endereço e como conheceu
-                            TextFieldFormulario(
-                              keyboardType: TextInputType.text,
-                              labelText: "Endereço",
-                              hintText: "Digite seu endereço..",
-                              controller: _enderecoController,
-                              icon: Icon(FontAwesomeIcons.mapMarkerAlt,
-                                  color: rosaPaula),
-                            ),
-                            TextFieldFormulario(
-                              keyboardType: TextInputType.text,
-                              labelText: "Como nos conheceu",
-                              hintText: "Digite como nos conheceu..",
-                              controller: _comoconheceuController,
-                              icon: Icon(FontAwesomeIcons.questionCircle,
-                                  color: rosaPaula),
+                            Form(
+                              key: _formKey,
+                              child: Column(
+                               children: <Widget>[
+                                 //Nome
+                                 TextFieldFormularioTop(
+                                     keyboardType: TextInputType.text,
+                                     labelText: "Nome completo",
+                                     hintText: "Digite seu nome completo..",
+                                     controller: _nomeController,
+                                     icon: Icon(FontAwesomeIcons.user,color: rosaPaula),
+                                     onSaved: (String value) {
+                                       _cliente.nome = value;
+                                     },
+                                     validator: _validarNome,
+                                 ),
+                                 //Nascimento
+                                 TextFieldFormularioTop(
+                                   keyboardType: TextInputType.datetime,
+                                   labelText: "Nascimento",
+                                   hintText: "Digite sua data de nascimento..",
+                                   controller: _nascimentoController,
+                                   icon: Icon(FontAwesomeIcons.birthdayCake,color: rosaPaula),
+                                   mascara: [mascaraNascimento],
+                                   onSaved: (String value) {
+                                     _cliente.nascimento = value;
+                                   },
+                                   validator: _validarNascimento,
+                                 ),
+                                 //Telefone
+                                 TextFieldFormularioTop(
+                                   keyboardType: TextInputType.phone,
+                                   labelText: "Telefone",
+                                   hintText: "+xx (xx) xxxxx-xxxx",
+                                   controller: _telefoneController,
+                                   icon: Icon(FontAwesomeIcons.whatsapp,color: rosaPaula),
+                                   mascara: [mascaraTelefone],
+                                   onSaved: (String value) {
+                                     _cliente.telefone = value;
+                                   },
+                                   validator: _validarTelefone,
+                                 ),
+                                 //Instagram
+                                 TextFieldFormularioTop(
+                                   keyboardType: TextInputType.text,
+                                   labelText: "Instagram",
+                                   hintText: "@..",
+                                   controller: _instagramController,
+                                   icon: Icon(FontAwesomeIcons.instagram,color: rosaPaula),
+                                   mascara: [mascaraInstagram],
+                                   onSaved: (String value) {
+                                     _cliente.instagram = value;
+                                   },
+                                   validator: _validarInstagram,
+                                 ),
+                                 //Email
+                                 TextFieldFormularioTop(
+                                   keyboardType: TextInputType.emailAddress,
+                                   labelText: "E-mail",
+                                   hintText: "Digite seu e-mail..",
+                                   controller: _emailController,
+                                   icon: Icon(FontAwesomeIcons.at,color: rosaPaula),
+                                   onSaved: (String value) {
+                                     _cliente.email = value;
+                                   },
+                                   validator: _validarEmail,
+                                 ),
+                                 //Atividade
+                                 TextFieldFormularioTop(
+                                   keyboardType: TextInputType.text,
+                                   labelText: "Atividade",
+                                   hintText: "Digite seu ramo de atividade..",
+                                   controller: _atividadeController,
+                                   icon: Icon(FontAwesomeIcons.briefcase,color: rosaPaula),
+                                   onSaved: (String value) {
+                                     _cliente.atividade = value;
+                                   },
+                                   validator: _validarAtividade,
+                                 ),
+                                 //CPF
+                                 TextFieldFormularioTop(
+                                   keyboardType: TextInputType.number,
+                                   labelText: "CPF",
+                                   hintText: "Digite seu CPF..",
+                                   controller: _cpfController,
+                                   icon: Icon(FontAwesomeIcons.idCard,color: rosaPaula),
+                                   mascara: [mascaraCPF],
+                                   onSaved: (String value) {
+                                     _cliente.cpf = value;
+                                   },
+                                   validator: _validarCPF,
+                                 ),
+                                 //Endereço
+                                 TextFieldFormularioTop(
+                                   keyboardType: TextInputType.text,
+                                   labelText: "Endereço",
+                                   hintText: "Digite seu endereço..",
+                                   controller: _enderecoController,
+                                   icon: Icon(FontAwesomeIcons.mapMarkerAlt,color: rosaPaula),
+                                   onSaved: (String value) {
+                                     _cliente.endereco = value;
+                                   },
+                                   validator: _validarEndereco,
+                                 ),
+                                 //Como nos conheceu
+                                 TextFieldFormularioTop(
+                                   keyboardType: TextInputType.text,
+                                   labelText: "Como nos conheceu",
+                                   hintText: "Digite como nos conheceu..",
+                                   controller: _comoconheceuController,
+                                   icon: Icon(FontAwesomeIcons.questionCircle,color: rosaPaula),
+                                   onSaved: (String value) {
+                                     _cliente.comoConheceu = value;
+                                   },
+                                   validator: _validarComoConheceu
+                                 )
+                               ],
+                              ),
                             ),
                           ],
                         )
                       : Container(),
-                  //Tratamentos a serem feitos
+                  //TRATAMENTOS A SEREM FEITOS
                   Column(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
-                      FlatButton.icon(
-                        onPressed: () {
-                          setState(() {
-                            _infoTratamento = !_infoTratamento;
-                          });
-                        },
-                        label: Text(
-                          "Tratamentos a serem feitos",
-                          style: TextStyle(
-                              fontSize: 25.0,
-                              fontWeight: FontWeight.bold,
-                              color: rosaPaula),
-                        ),
-                        icon: _infoTratamento
-                            ? Icon(
-                                FontAwesomeIcons.chevronDown,
-                                color: rosaPaula,
-                              )
-                            : Icon(
-                                FontAwesomeIcons.chevronRight,
-                                color: rosaPaula,
-                              ),
-                      ),
+                      CustomDropdown(
+                          label: "Tratamentos a serem feitos",
+                          onPressed: () {
+                            setState(() {
+                              _infoTratamento = !_infoTratamento;
+                            });
+                          },
+                          icon: _infoTratamento ? FontAwesomeIcons.chevronDown: FontAwesomeIcons.chevronRight),
                       _infoTratamento
                           ? Column(
                               children: <Widget>[
@@ -258,8 +342,7 @@ class _CadastroClienteState extends State<CadastroCliente> {
                                     //width: MediaQuery.of(context).size.width,
                                     child: ListView(
                                       padding: EdgeInsets.all(0.0),
-                                      children: _buttonOptions
-                                          .map((timeValue) => RadioListTile(
+                                      children: _buttonOptions.map((timeValue) => RadioListTile(
                                                 groupValue: _opcaoAtendimento,
                                                 title: Text(timeValue._value),
                                                 value: timeValue._key,
@@ -278,16 +361,12 @@ class _CadastroClienteState extends State<CadastroCliente> {
                                 Padding(
                                   padding: EdgeInsets.only(right: 30, left: 30),
                                   child: RaisedButton(
-                                    shape: RoundedRectangleBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(5.0)),
+                                    shape: RoundedRectangleBorder(borderRadius:BorderRadius.circular(5.0)),
                                     elevation: 4.0,
                                     onPressed: () {
                                       DatePicker.showDatePicker(
                                         context,
-                                        theme: DatePickerTheme(
-                                          containerHeight: 210.0,
-                                        ),
+                                        theme: DatePickerTheme(containerHeight: 210.0),
                                         showTitleActions: true,
                                         locale: LocaleType.pt,
                                         minTime: DateTime(2019, 1, 1),
@@ -295,8 +374,7 @@ class _CadastroClienteState extends State<CadastroCliente> {
                                         onConfirm: (date) {
                                           print('confirm $date');
                                           setState(() {
-                                            _dataAgendamento =
-                                                ' ${date.day} / ${date.month} / ${date.year}';
+                                            _dataAgendamento =' ${date.day} / ${date.month} / ${date.year}';
                                           });
                                         },
                                         // currentTime: DateTime.now(), locale: LocaleType.en
@@ -306,19 +384,14 @@ class _CadastroClienteState extends State<CadastroCliente> {
                                       alignment: Alignment.center,
                                       height: 50.0,
                                       child: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
+                                        mainAxisAlignment:MainAxisAlignment.spaceBetween,
                                         children: <Widget>[
                                           Row(
                                             children: <Widget>[
                                               Container(
                                                 child: Row(
                                                   children: <Widget>[
-                                                    Icon(
-                                                      Icons.date_range,
-                                                      size: 18.0,
-                                                      color: rosaPaula,
-                                                    ),
+                                                    Icon(Icons.date_range,size: 18.0,color: rosaPaula),
                                                     Text(
                                                       _dataAgendamento,
                                                       style: TextStyle(
@@ -355,38 +428,24 @@ class _CadastroClienteState extends State<CadastroCliente> {
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
-                      FlatButton.icon(
-                        onPressed: () {
-                          setState(() {
-                            _infoAvaliacao = !_infoAvaliacao;
-                          });
-                        },
-                        label: Text(
-                          "Avaliação",
-                          style: TextStyle(
-                            fontSize: 25.0,
-                            fontWeight: FontWeight.bold,
-                            color: rosaPaula,
-                          ),
-                        ),
-                        icon: _infoAvaliacao
-                            ? Icon(FontAwesomeIcons.chevronDown,
-                                color: rosaPaula)
-                            : Icon(FontAwesomeIcons.chevronRight,
-                                color: rosaPaula),
-                      ),
+                      CustomDropdown(
+                          label: "Avaliação",
+                          onPressed: () {
+                            setState(() {
+                              _infoAvaliacao = !_infoAvaliacao;
+                            });
+                          },
+                          icon: _infoAvaliacao ? FontAwesomeIcons.chevronDown: FontAwesomeIcons.chevronRight),
                       _infoAvaliacao
                           ? Column(
                               children: <Widget>[
                                 //Primeira Pergunta
                                 Padding(
-                                    padding:
-                                        EdgeInsets.only(right: 30, left: 30),
+                                    padding:EdgeInsets.only(right: 30, left: 30),
                                     child: Column(
                                       children: <Widget>[
                                         Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
+                                          mainAxisAlignment:MainAxisAlignment.spaceBetween,
                                           children: <Widget>[
                                             Expanded(
                                                 child: AutoSizeText(
@@ -401,15 +460,11 @@ class _CadastroClienteState extends State<CadastroCliente> {
                                                       !resultadoPergunta1;
                                                 });
                                               },
-                                              behavior:
-                                                  HitTestBehavior.translucent,
+                                              behavior:HitTestBehavior.translucent,
                                               child: Row(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.center,
+                                                mainAxisAlignment:MainAxisAlignment.center,
                                                 children: <Widget>[
-                                                  SwitchlikeCheckbox(
-                                                      checked:
-                                                          resultadoPergunta1),
+                                                  SwitchlikeCheckbox(checked:resultadoPergunta1),
                                                 ],
                                               ),
                                             ),
@@ -417,8 +472,7 @@ class _CadastroClienteState extends State<CadastroCliente> {
                                         ),
                                         resultadoPergunta1
                                             ? TextFieldFormulario(
-                                                keyboardType:
-                                                    TextInputType.text,
+                                                keyboardType:TextInputType.text,
                                                 labelText: "Especifique: ",
                                                 hintText: "Especifique..",
                                                 controller: _p1Controller,
@@ -428,13 +482,11 @@ class _CadastroClienteState extends State<CadastroCliente> {
                                     )),
                                 //Segunda Pergunta
                                 Padding(
-                                    padding: EdgeInsets.only(
-                                        top: 10, right: 30, left: 30),
+                                    padding: EdgeInsets.only(top: 10, right: 30, left: 30),
                                     child: Column(
                                       children: <Widget>[
                                         Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
+                                          mainAxisAlignment:MainAxisAlignment.spaceBetween,
                                           children: <Widget>[
                                             Expanded(
                                                 child: AutoSizeText(
@@ -449,15 +501,11 @@ class _CadastroClienteState extends State<CadastroCliente> {
                                                       !resultadoPergunta2;
                                                 });
                                               },
-                                              behavior:
-                                                  HitTestBehavior.translucent,
+                                              behavior:HitTestBehavior.translucent,
                                               child: Row(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.center,
+                                                mainAxisAlignment:MainAxisAlignment.center,
                                                 children: <Widget>[
-                                                  SwitchlikeCheckbox(
-                                                      checked:
-                                                          resultadoPergunta2),
+                                                  SwitchlikeCheckbox(checked:resultadoPergunta2),
                                                 ],
                                               ),
                                             ),
@@ -465,8 +513,7 @@ class _CadastroClienteState extends State<CadastroCliente> {
                                         ),
                                         resultadoPergunta2
                                             ? TextFieldFormulario(
-                                                keyboardType:
-                                                    TextInputType.text,
+                                                keyboardType:TextInputType.text,
                                                 labelText: "Especifique: ",
                                                 hintText: "Especifique..",
                                                 controller: _p2Controller,
@@ -476,13 +523,11 @@ class _CadastroClienteState extends State<CadastroCliente> {
                                     )),
                                 //Terceira Pergunta
                                 Padding(
-                                    padding: EdgeInsets.only(
-                                        top: 10, right: 30, left: 30),
+                                    padding: EdgeInsets.only(top: 10, right: 30, left: 30),
                                     child: Column(
                                       children: <Widget>[
                                         Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
+                                          mainAxisAlignment:MainAxisAlignment.spaceBetween,
                                           children: <Widget>[
                                             Expanded(
                                                 child: AutoSizeText(
@@ -497,15 +542,11 @@ class _CadastroClienteState extends State<CadastroCliente> {
                                                       !resultadoPergunta3;
                                                 });
                                               },
-                                              behavior:
-                                                  HitTestBehavior.translucent,
+                                              behavior:HitTestBehavior.translucent,
                                               child: Row(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.center,
+                                                mainAxisAlignment:MainAxisAlignment.center,
                                                 children: <Widget>[
-                                                  SwitchlikeCheckbox(
-                                                      checked:
-                                                          resultadoPergunta3),
+                                                  SwitchlikeCheckbox(checked:resultadoPergunta3),
                                                 ],
                                               ),
                                             ),
@@ -513,8 +554,7 @@ class _CadastroClienteState extends State<CadastroCliente> {
                                         ),
                                         resultadoPergunta3
                                             ? TextFieldFormulario(
-                                                keyboardType:
-                                                    TextInputType.text,
+                                                keyboardType:TextInputType.text,
                                                 labelText: "Especifique: ",
                                                 hintText: "Especifique..",
                                                 controller: _p3Controller,
@@ -524,13 +564,11 @@ class _CadastroClienteState extends State<CadastroCliente> {
                                     )),
                                 //Quarta pergunta
                                 Padding(
-                                    padding: EdgeInsets.only(
-                                        top: 10, right: 30, left: 30),
+                                    padding: EdgeInsets.only(top: 10, right: 30, left: 30),
                                     child: Column(
                                       children: <Widget>[
                                         Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
+                                          mainAxisAlignment:MainAxisAlignment.spaceBetween,
                                           children: <Widget>[
                                             Expanded(
                                                 child: AutoSizeText(
@@ -545,15 +583,11 @@ class _CadastroClienteState extends State<CadastroCliente> {
                                                       !resultadoPergunta4;
                                                 });
                                               },
-                                              behavior:
-                                                  HitTestBehavior.translucent,
+                                              behavior:HitTestBehavior.translucent,
                                               child: Row(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.center,
+                                                mainAxisAlignment:MainAxisAlignment.center,
                                                 children: <Widget>[
-                                                  SwitchlikeCheckbox(
-                                                      checked:
-                                                          resultadoPergunta4),
+                                                  SwitchlikeCheckbox(checked:resultadoPergunta4),
                                                 ],
                                               ),
                                             ),
@@ -561,8 +595,7 @@ class _CadastroClienteState extends State<CadastroCliente> {
                                         ),
                                         resultadoPergunta4
                                             ? TextFieldFormulario(
-                                                keyboardType:
-                                                    TextInputType.text,
+                                                keyboardType:TextInputType.text,
                                                 labelText: "Especifique: ",
                                                 hintText: "Especifique..",
                                                 controller: _p4Controller,
@@ -572,13 +605,11 @@ class _CadastroClienteState extends State<CadastroCliente> {
                                     )),
                                 //Quinta Pergunta
                                 Padding(
-                                    padding: EdgeInsets.only(
-                                        top: 10, right: 30, left: 30),
+                                    padding: EdgeInsets.only(top: 10, right: 30, left: 30),
                                     child: Column(
                                       children: <Widget>[
                                         Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
+                                          mainAxisAlignment:MainAxisAlignment.spaceBetween,
                                           children: <Widget>[
                                             Expanded(
                                                 child: AutoSizeText(
@@ -593,15 +624,11 @@ class _CadastroClienteState extends State<CadastroCliente> {
                                                       !resultadoPergunta5;
                                                 });
                                               },
-                                              behavior:
-                                                  HitTestBehavior.translucent,
+                                              behavior:HitTestBehavior.translucent,
                                               child: Row(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.center,
+                                                mainAxisAlignment:MainAxisAlignment.center,
                                                 children: <Widget>[
-                                                  SwitchlikeCheckbox(
-                                                      checked:
-                                                          resultadoPergunta5),
+                                                  SwitchlikeCheckbox(checked:resultadoPergunta5),
                                                 ],
                                               ),
                                             ),
@@ -609,8 +636,7 @@ class _CadastroClienteState extends State<CadastroCliente> {
                                         ),
                                         resultadoPergunta5
                                             ? TextFieldFormulario(
-                                                keyboardType:
-                                                    TextInputType.text,
+                                                keyboardType:TextInputType.text,
                                                 labelText: "Especifique: ",
                                                 hintText: "Especifique..",
                                                 controller: _p5Controller,
@@ -620,13 +646,11 @@ class _CadastroClienteState extends State<CadastroCliente> {
                                     )),
                                 //Sexta Pergunta
                                 Padding(
-                                    padding: EdgeInsets.only(
-                                        top: 10, right: 30, left: 30),
+                                    padding: EdgeInsets.only(top: 10, right: 30, left: 30),
                                     child: Column(
                                       children: <Widget>[
                                         Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
+                                          mainAxisAlignment:MainAxisAlignment.spaceBetween,
                                           children: <Widget>[
                                             Expanded(
                                                 child: AutoSizeText(
@@ -641,15 +665,11 @@ class _CadastroClienteState extends State<CadastroCliente> {
                                                       !resultadoPergunta6;
                                                 });
                                               },
-                                              behavior:
-                                                  HitTestBehavior.translucent,
+                                              behavior: HitTestBehavior.translucent,
                                               child: Row(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.center,
+                                                mainAxisAlignment:MainAxisAlignment.center,
                                                 children: <Widget>[
-                                                  SwitchlikeCheckbox(
-                                                      checked:
-                                                          resultadoPergunta6),
+                                                  SwitchlikeCheckbox(checked:resultadoPergunta6),
                                                 ],
                                               ),
                                             ),
@@ -657,8 +677,7 @@ class _CadastroClienteState extends State<CadastroCliente> {
                                         ),
                                         resultadoPergunta6
                                             ? TextFieldFormulario(
-                                                keyboardType:
-                                                    TextInputType.text,
+                                                keyboardType: TextInputType.text,
                                                 labelText: "Especifique: ",
                                                 hintText: "Especifique..",
                                                 controller: _p6Controller,
@@ -668,13 +687,11 @@ class _CadastroClienteState extends State<CadastroCliente> {
                                     )),
                                 //Setima Pergunta
                                 Padding(
-                                    padding: EdgeInsets.only(
-                                        top: 10, right: 30, left: 30),
+                                    padding: EdgeInsets.only(top: 10, right: 30, left: 30),
                                     child: Column(
                                       children: <Widget>[
                                         Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
+                                          mainAxisAlignment:MainAxisAlignment.spaceBetween,
                                           children: <Widget>[
                                             Expanded(
                                                 child: AutoSizeText(
@@ -689,15 +706,11 @@ class _CadastroClienteState extends State<CadastroCliente> {
                                                       !resultadoPergunta7;
                                                 });
                                               },
-                                              behavior:
-                                                  HitTestBehavior.translucent,
+                                              behavior:HitTestBehavior.translucent,
                                               child: Row(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.center,
+                                                mainAxisAlignment:MainAxisAlignment.center,
                                                 children: <Widget>[
-                                                  SwitchlikeCheckbox(
-                                                      checked:
-                                                          resultadoPergunta7),
+                                                  SwitchlikeCheckbox(checked:resultadoPergunta7),
                                                 ],
                                               ),
                                             ),
@@ -705,8 +718,7 @@ class _CadastroClienteState extends State<CadastroCliente> {
                                         ),
                                         resultadoPergunta7
                                             ? TextFieldFormulario(
-                                                keyboardType:
-                                                    TextInputType.text,
+                                                keyboardType:TextInputType.text,
                                                 labelText: "Especifique: ",
                                                 hintText: "Especifique..",
                                                 controller: _p7Controller,
@@ -716,13 +728,11 @@ class _CadastroClienteState extends State<CadastroCliente> {
                                     )),
                                 //Oitava Pergunta
                                 Padding(
-                                    padding: EdgeInsets.only(
-                                        top: 10, right: 30, left: 30),
+                                    padding: EdgeInsets.only(top: 10, right: 30, left: 30),
                                     child: Column(
                                       children: <Widget>[
                                         Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
+                                          mainAxisAlignment:MainAxisAlignment.spaceBetween,
                                           children: <Widget>[
                                             Expanded(
                                                 child: AutoSizeText(
@@ -737,15 +747,11 @@ class _CadastroClienteState extends State<CadastroCliente> {
                                                       !resultadoPergunta8;
                                                 });
                                               },
-                                              behavior:
-                                                  HitTestBehavior.translucent,
+                                              behavior:HitTestBehavior.translucent,
                                               child: Row(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.center,
+                                                mainAxisAlignment:MainAxisAlignment.center,
                                                 children: <Widget>[
-                                                  SwitchlikeCheckbox(
-                                                      checked:
-                                                          resultadoPergunta8),
+                                                  SwitchlikeCheckbox(checked:resultadoPergunta8),
                                                 ],
                                               ),
                                             ),
@@ -753,8 +759,7 @@ class _CadastroClienteState extends State<CadastroCliente> {
                                         ),
                                         resultadoPergunta8
                                             ? TextFieldFormulario(
-                                                keyboardType:
-                                                    TextInputType.text,
+                                                keyboardType:TextInputType.text,
                                                 labelText: "Especifique: ",
                                                 hintText: "Especifique..",
                                                 controller: _p8Controller,
@@ -764,13 +769,11 @@ class _CadastroClienteState extends State<CadastroCliente> {
                                     )),
                                 //Nona Pergunta
                                 Padding(
-                                    padding: EdgeInsets.only(
-                                        top: 10, right: 30, left: 30),
+                                    padding: EdgeInsets.only(top: 10, right: 30, left: 30),
                                     child: Column(
                                       children: <Widget>[
                                         Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
+                                          mainAxisAlignment:MainAxisAlignment.spaceBetween,
                                           children: <Widget>[
                                             Expanded(
                                                 child: AutoSizeText(
@@ -785,15 +788,11 @@ class _CadastroClienteState extends State<CadastroCliente> {
                                                       !resultadoPergunta9;
                                                 });
                                               },
-                                              behavior:
-                                                  HitTestBehavior.translucent,
+                                              behavior:HitTestBehavior.translucent,
                                               child: Row(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.center,
+                                                mainAxisAlignment:MainAxisAlignment.center,
                                                 children: <Widget>[
-                                                  SwitchlikeCheckbox(
-                                                      checked:
-                                                          resultadoPergunta9),
+                                                  SwitchlikeCheckbox(checked:resultadoPergunta9),
                                                 ],
                                               ),
                                             ),
@@ -801,8 +800,7 @@ class _CadastroClienteState extends State<CadastroCliente> {
                                         ),
                                         resultadoPergunta9
                                             ? TextFieldFormulario(
-                                                keyboardType:
-                                                    TextInputType.text,
+                                                keyboardType:TextInputType.text,
                                                 labelText: "Especifique: ",
                                                 hintText: "Especifique..",
                                                 controller: _p9Controller,
@@ -812,13 +810,11 @@ class _CadastroClienteState extends State<CadastroCliente> {
                                     )),
                                 //Decima pergunta
                                 Padding(
-                                    padding: EdgeInsets.only(
-                                        top: 10, right: 30, left: 30),
+                                    padding: EdgeInsets.only(top: 10, right: 30, left: 30),
                                     child: Column(
                                       children: <Widget>[
                                         Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
+                                          mainAxisAlignment:MainAxisAlignment.spaceBetween,
                                           children: <Widget>[
                                             Expanded(
                                                 child: AutoSizeText(
@@ -833,15 +829,11 @@ class _CadastroClienteState extends State<CadastroCliente> {
                                                       !resultadoPergunta10;
                                                 });
                                               },
-                                              behavior:
-                                                  HitTestBehavior.translucent,
+                                              behavior:HitTestBehavior.translucent,
                                               child: Row(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.center,
+                                                mainAxisAlignment:MainAxisAlignment.center,
                                                 children: <Widget>[
-                                                  SwitchlikeCheckbox(
-                                                      checked:
-                                                          resultadoPergunta10),
+                                                  SwitchlikeCheckbox(checked:resultadoPergunta10),
                                                 ],
                                               ),
                                             ),
@@ -849,8 +841,7 @@ class _CadastroClienteState extends State<CadastroCliente> {
                                         ),
                                         resultadoPergunta10
                                             ? TextFieldFormulario(
-                                                keyboardType:
-                                                    TextInputType.text,
+                                                keyboardType:TextInputType.text,
                                                 labelText: "Especifique: ",
                                                 hintText: "Especifique..",
                                                 controller: _p10Controller,
@@ -860,13 +851,11 @@ class _CadastroClienteState extends State<CadastroCliente> {
                                     )),
                                 //Decima primeira Pergunta
                                 Padding(
-                                    padding: EdgeInsets.only(
-                                        top: 10, right: 30, left: 30),
+                                    padding: EdgeInsets.only(top: 10, right: 30, left: 30),
                                     child: Column(
                                       children: <Widget>[
                                         Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
+                                          mainAxisAlignment:MainAxisAlignment.spaceBetween,
                                           children: <Widget>[
                                             Expanded(
                                                 child: AutoSizeText(
@@ -881,15 +870,11 @@ class _CadastroClienteState extends State<CadastroCliente> {
                                                       !resultadoPergunta11;
                                                 });
                                               },
-                                              behavior:
-                                                  HitTestBehavior.translucent,
+                                              behavior:HitTestBehavior.translucent,
                                               child: Row(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.center,
+                                                mainAxisAlignment:MainAxisAlignment.center,
                                                 children: <Widget>[
-                                                  SwitchlikeCheckbox(
-                                                      checked:
-                                                          resultadoPergunta11),
+                                                  SwitchlikeCheckbox(checked:resultadoPergunta11),
                                                 ],
                                               ),
                                             ),
@@ -897,8 +882,7 @@ class _CadastroClienteState extends State<CadastroCliente> {
                                         ),
                                         resultadoPergunta11
                                             ? TextFieldFormulario(
-                                                keyboardType:
-                                                    TextInputType.text,
+                                                keyboardType:TextInputType.text,
                                                 labelText: "Especifique: ",
                                                 hintText: "Especifique..",
                                                 controller: _p11Controller,
@@ -908,17 +892,13 @@ class _CadastroClienteState extends State<CadastroCliente> {
                                     )),
                                 //Decima segunda Pergunta
                                 Padding(
-                                    padding: EdgeInsets.only(
-                                        top: 10, right: 30, left: 30),
+                                    padding: EdgeInsets.only(top: 10, right: 30, left: 30),
                                     child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.stretch,
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceEvenly,
+                                      crossAxisAlignment:CrossAxisAlignment.stretch,
+                                      mainAxisAlignment:MainAxisAlignment.spaceEvenly,
                                       children: <Widget>[
                                         Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
+                                          mainAxisAlignment:MainAxisAlignment.spaceBetween,
                                           children: <Widget>[
                                             Expanded(
                                                 child: AutoSizeText(
@@ -933,15 +913,11 @@ class _CadastroClienteState extends State<CadastroCliente> {
                                                       !resultadoPergunta12;
                                                 });
                                               },
-                                              behavior:
-                                                  HitTestBehavior.translucent,
+                                              behavior:HitTestBehavior.translucent,
                                               child: Row(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.center,
+                                                mainAxisAlignment:MainAxisAlignment.center,
                                                 children: <Widget>[
-                                                  SwitchlikeCheckbox(
-                                                      checked:
-                                                          resultadoPergunta12),
+                                                  SwitchlikeCheckbox(checked:resultadoPergunta12),
                                                 ],
                                               ),
                                             ),
@@ -949,8 +925,7 @@ class _CadastroClienteState extends State<CadastroCliente> {
                                         ),
                                         resultadoPergunta12
                                             ? TextFieldFormulario(
-                                                keyboardType:
-                                                    TextInputType.text,
+                                                keyboardType:TextInputType.text,
                                                 labelText: "Especifique: ",
                                                 hintText: "Especifique..",
                                                 controller: _p12Controller,
@@ -968,29 +943,14 @@ class _CadastroClienteState extends State<CadastroCliente> {
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
-                      FlatButton.icon(
-                        onPressed: () {
-                          setState(() {
-                            _infoAutorizacao = !_infoAutorizacao;
-                          });
-                        },
-                        label: Text(
-                          "Autorização",
-                          style: TextStyle(
-                              fontSize: 25.0,
-                              fontWeight: FontWeight.bold,
-                              color: rosaPaula),
-                        ),
-                        icon: _infoAutorizacao
-                            ? Icon(
-                                FontAwesomeIcons.chevronDown,
-                                color: rosaPaula,
-                              )
-                            : Icon(
-                                FontAwesomeIcons.chevronRight,
-                                color: rosaPaula,
-                              ),
-                      ),
+                      CustomDropdown(
+                          label: "Tratamentos a serem feitos",
+                          onPressed: () {
+                            setState(() {
+                              _infoAutorizacao = !_infoAutorizacao;
+                            });
+                          },
+                          icon: _infoAutorizacao ? FontAwesomeIcons.chevronDown: FontAwesomeIcons.chevronRight),
                       _infoAutorizacao
                           ? Column(
                               children: <Widget>[
@@ -998,10 +958,8 @@ class _CadastroClienteState extends State<CadastroCliente> {
                                     padding:
                                         EdgeInsets.only(right: 30, left: 30),
                                     child: Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceEvenly,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.center,
+                                      mainAxisAlignment:MainAxisAlignment.spaceEvenly,
+                                      crossAxisAlignment:CrossAxisAlignment.center,
                                       children: <Widget>[
                                         Row(
                                           children: <Widget>[
@@ -1022,19 +980,14 @@ class _CadastroClienteState extends State<CadastroCliente> {
                                         ),
                                         // Bloco pra assinatura
                                         Padding(
-                                          padding: EdgeInsets.only(
-                                              top: 10, right: 00, left: 00),
+                                          padding: EdgeInsets.only(top: 10, right: 00, left: 00),
                                           child: RaisedButton(
-                                            shape: RoundedRectangleBorder(
-                                                borderRadius:
-                                                    BorderRadius.circular(5.0)),
+                                            shape: RoundedRectangleBorder(borderRadius:BorderRadius.circular(5.0)),
                                             elevation: 4.0,
                                             onPressed: () {
                                               DatePicker.showDatePicker(
                                                 context,
-                                                theme: DatePickerTheme(
-                                                  containerHeight: 210.0,
-                                                ),
+                                                theme: DatePickerTheme(containerHeight: 210.0),
                                                 showTitleActions: true,
                                                 locale: LocaleType.pt,
                                                 minTime: DateTime(2019, 1, 1),
@@ -1042,12 +995,9 @@ class _CadastroClienteState extends State<CadastroCliente> {
                                                 onConfirm: (date) {
                                                   print('confirm $date');
                                                   setState(() {
-                                                    _dataAssinatura =
-                                                        " Em ${date.day} / ${date.month} / ${date.year} ";
-                                                    _signatureController
-                                                        .clear();
-                                                    _visualizarAssinatura =
-                                                        true;
+                                                    _dataAssinatura =" Em ${date.day} / ${date.month} / ${date.year} ";
+                                                    _signatureController.clear();
+                                                    _visualizarAssinatura = true;
                                                     _assinaturaFeita = false;
                                                   });
                                                 },
@@ -1058,30 +1008,21 @@ class _CadastroClienteState extends State<CadastroCliente> {
                                               alignment: Alignment.center,
                                               height: 50.0,
                                               child: Row(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment
-                                                        .spaceBetween,
+                                                mainAxisAlignment:MainAxisAlignment.spaceBetween,
                                                 children: <Widget>[
                                                   Row(
                                                     children: <Widget>[
                                                       Container(
                                                         child: Row(
                                                           children: <Widget>[
-                                                            Icon(
-                                                              Icons.date_range,
-                                                              size: 18.0,
-                                                              color: rosaPaula,
-                                                            ),
+                                                            Icon(Icons.date_range,size: 18.0,color: rosaPaula),
                                                             Text(
                                                               _dataAssinatura,
                                                               style: TextStyle(
-                                                                  color:
-                                                                      rosaPaula,
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .bold,
-                                                                  fontSize:
-                                                                      20.0),
+                                                                  color:rosaPaula,
+                                                                  fontWeight:FontWeight.bold,
+                                                                  fontSize:20.0
+                                                              ),
                                                             ),
                                                           ],
                                                         ),
@@ -1092,8 +1033,7 @@ class _CadastroClienteState extends State<CadastroCliente> {
                                                     "  ASSINAR",
                                                     style: TextStyle(
                                                         color: Colors.grey,
-                                                        fontWeight:
-                                                            FontWeight.bold,
+                                                        fontWeight:FontWeight.bold,
                                                         fontSize: 18.0),
                                                   ),
                                                 ],
@@ -1104,62 +1044,36 @@ class _CadastroClienteState extends State<CadastroCliente> {
                                         ),
                                         _assinaturaFeita
                                             ? Padding(
-                                                padding:
-                                                    EdgeInsets.only(top: 10),
+                                                padding:EdgeInsets.only(top: 10),
                                                 child: Image.memory(data),
                                               )
                                             : Container(),
                                         _visualizarAssinatura
                                             ? Center(
                                                 child: Signature(
-                                                  controller:
-                                                      _signatureController,
+                                                  controller:_signatureController,
                                                   height: 200,
-                                                  backgroundColor:
-                                                      Colors.grey[200],
+                                                  backgroundColor:Colors.grey[200],
                                                 ),
                                               )
                                             : Container(),
                                         _visualizarAssinatura
                                             ? Container(
-                                                decoration: BoxDecoration(
-                                                    color: Colors.lightGreen),
+                                                decoration: BoxDecoration( color: Colors.lightGreen),
                                                 child: Row(
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment
-                                                          .spaceEvenly,
-                                                  mainAxisSize:
-                                                      MainAxisSize.max,
+                                                  mainAxisAlignment:MainAxisAlignment.spaceEvenly,
+                                                  mainAxisSize:MainAxisSize.max,
                                                   children: <Widget>[
                                                     IconButton(
-                                                      icon: const Icon(
-                                                          Icons.check),
+                                                      icon: const Icon(Icons.check),
                                                       color: Colors.white,
                                                       onPressed: () async {
-                                                        if (_signatureController
-                                                            .isNotEmpty) {
-                                                          data =
-                                                              await _signatureController
-                                                                  .toPngBytes();
+                                                        if (_signatureController.isNotEmpty) {
+                                                          data = await _signatureController.toPngBytes();
                                                           setState(() {
-                                                            _assinaturaFeita =
-                                                                !_assinaturaFeita;
-                                                            _visualizarAssinatura =
-                                                                !_visualizarAssinatura;
+                                                            _assinaturaFeita =!_assinaturaFeita;
+                                                            _visualizarAssinatura =!_visualizarAssinatura;
                                                           });
-                                                          /*Navigator.of(context).push(
-                                                  MaterialPageRoute(
-                                                      builder: (BuildContext context){
-                                                        return Scaffold (
-                                                          appBar: AppBar(),
-                                                          body: Center(
-                                                            child: Container(
-                                                              color: Colors.grey[300], child: Image.memory(data),
-                                                            ),
-                                                          ),
-                                                        );
-                                                      })
-                                              );*/
                                                         }
                                                       },
                                                     )
@@ -1177,7 +1091,8 @@ class _CadastroClienteState extends State<CadastroCliente> {
                   //SALVAR E VALIDAR
                   CustomButton(
                     label: "Finalizar",
-                  )
+                    onPressed: _validarCampos
+                  ),
                 ],
               ),
             ),
