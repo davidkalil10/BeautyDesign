@@ -7,5 +7,5 @@ class DadosCliente{
   String atividade ="";
   String cpf ="";
   String endereco ="";
-  String comoConheceu ="";
+  String comoConheceu =""; //
 }

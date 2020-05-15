@@ -42,7 +42,7 @@ class TextFieldFormularioTop extends StatelessWidget {
         inputFormatters: mascara,
         autofocus: false,
         autocorrect: true,
-        autovalidate: true,
+        autovalidate: true,//
         validator: validator,
         onSaved: onSaved,
         decoration: InputDecoration(

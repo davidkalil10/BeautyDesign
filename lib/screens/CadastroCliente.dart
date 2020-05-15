@@ -17,6 +17,7 @@ class CadastroCliente extends StatefulWidget {
 }
 
 //DRAWER DA ASSINATURA
+
 final SignatureController _signatureController = SignatureController(
   penStrokeWidth: 4,
   penColor: Colors.black54,
