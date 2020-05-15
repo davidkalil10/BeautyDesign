@@ -49,7 +49,7 @@ class _HomeState extends State<Home> {
             child: SingleChildScrollView(
               child: Column(
                 children: <Widget>[
-                  Image.asset("assets/capa.png"),
+                  Image.asset("assets/img/capa.png"),
                   Padding(
                     padding: EdgeInsets.all(20),
                     child: TextField(
