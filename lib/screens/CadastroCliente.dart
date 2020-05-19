@@ -10,6 +10,7 @@ import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:signature/signature.dart';
+import 'package:validate/validate.dart';
 
 class CadastroCliente extends StatefulWidget {
   @override
@@ -88,7 +89,10 @@ class _CadastroClienteState extends State<CadastroCliente> {
     if (value.length <= 2) {return 'Insira um ID valido';}  return null;
   }
   String _validarEmail(String value) {
-    if (value.length <= 2) {return 'Insira um e-mail valido';}  return null;
+    //if (value.length <= 2) {return 'Insira um e-mail valido';}  return null;
+    try {Validate.isEmail(value);} catch (e) {
+      return 'Insira um e-mail valido';
+    }return null;
   }
   String _validarAtividade(String value) {
     if (value.length <= 2) {return 'Preencha a atividade';}  return null;

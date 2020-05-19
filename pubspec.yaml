@@ -23,6 +23,7 @@ dependencies:
   #cloud_firestore: ^0.13.5 #banco de dados
   firebase_storage: ^3.1.5 #armazenamento de arquivos
   firebase_auth: ^0.16.0 #autenticação do usuario
+  validate: ^1.7.0
 
 dev_dependencies:
   flutter_test:
@@ -50,4 +51,4 @@ flutter:
           weight: 400
 
   assets:
-    - assets/
+    - assets/img/capa.png
